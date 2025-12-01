@@ -1,0 +1,222 @@
+        /* ===================================== */
+        /* QUEST NOTIFICATION (GAME-STYLE) */
+        /* ===================================== */
+        
+        .quest-notification-container {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            z-index: 9999;
+            transition: right 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+        
+        .quest-notification-container.show {
+            right: 20px;
+        }
+        
+        .quest-notification-container.hide-left {
+            right: calc(100% + 50px);
+        }
+        
+        .quest-notification {
+            width: 350px;
+            background: linear-gradient(135deg, #1e1e2e 0%, #2d2d44 100%);
+            border: 3px solid #ff4757;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 15px 50px rgba(255, 71, 87, 0.6), 
+                        0 0 30px rgba(255, 71, 87, 0.3),
+                        inset 0 1px 0 rgba(255,255,255,0.1);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transform-origin: center right;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        
+        .quest-notification:hover {
+            transform: scale(1.05);
+            box-shadow: 0 20px 60px rgba(255, 71, 87, 0.8), 
+                        0 0 40px rgba(255, 71, 87, 0.5),
+                        inset 0 1px 0 rgba(255,255,255,0.2);
+        }
+        
+        .quest-notification::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #ff4757, #ff6348, #ff4757);
+            border-radius: 15px;
+            z-index: -1;
+            opacity: 0.3;
+            animation: pulse-border 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse-border {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(1.02); }
+        }
+        
+        .quest-notification-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 12px;
+        }
+        
+        .quest-alert-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #ff4757 0%, #ff6348 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            box-shadow: 0 5px 20px rgba(255, 71, 87, 0.5);
+            animation: bounce 2s infinite, rotate-subtle 3s ease-in-out infinite;
+        }
+        
+        @keyframes rotate-subtle {
+            0%, 100% { transform: rotate(-5deg); }
+            50% { transform: rotate(5deg); }
+        }
+        
+        .quest-alert-icon i {
+            font-size: 1.8rem;
+            color: white;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        
+        .quest-notification-content {
+            flex: 1;
+        }
+        
+        .quest-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #fff;
+            margin: 0 0 5px 0;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+            letter-spacing: 0.5px;
+        }
+        
+        .quest-description {
+            font-size: 0.9rem;
+            color: #ffd93d;
+            margin: 0;
+            font-weight: 600;
+            text-shadow: 0 1px 5px rgba(0,0,0,0.3);
+        }
+        
+        .quest-notification-body {
+            color: rgba(255,255,255,0.8);
+            font-size: 0.85rem;
+            line-height: 1.4;
+            margin-bottom: 12px;
+        }
+        
+        .quest-cta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: 10px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .quest-cta-text {
+            color: #4facfe;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .quest-cta-text i {
+            animation: arrow-move 1s ease-in-out infinite;
+        }
+        
+        @keyframes arrow-move {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(5px); }
+        }
+        
+        .quest-swipe-hint {
+            color: rgba(255,255,255,0.5);
+            font-size: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .quest-close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(255,71,87,0.2);
+            border: none;
+            color: white;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            z-index: 10;
+        }
+        
+        .quest-close-btn:hover {
+            background: rgba(255,71,87,0.5);
+            transform: rotate(90deg);
+        }
+        
+        /* Responsive Quest Notification */
+        @media (max-width: 768px) {
+            .quest-notification-container {
+                top: 80px;
+                right: -100%;
+            }
+            
+            .quest-notification-container.show {
+                right: 10px;
+            }
+            
+            .quest-notification {
+                width: calc(100vw - 20px);
+                max-width: 350px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .quest-notification {
+                padding: 15px;
+                max-width: 320px;
+            }
+            
+            .quest-alert-icon {
+                width: 45px;
+                height: 45px;
+            }
+            
+            .quest-alert-icon i {
+                font-size: 1.5rem;
+            }
+            
+            .quest-title {
+                font-size: 1rem;
+            }
+            
+            .quest-description {
+                font-size: 0.85rem;
+            }
+            
+            .quest-notification-body {
+                font-size: 0.8rem;
+            }
+        }

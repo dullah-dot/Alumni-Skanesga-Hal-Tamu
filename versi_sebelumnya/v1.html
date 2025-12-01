@@ -1,0 +1,2466 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alumni SMKN 1 Seyegan - Jurusan TKJ</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: #f4f4f4;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        /* ===================================== */
+        /* NAVBAR */
+        /* ===================================== */
+        .navbar-logo {
+            height: 40px;
+        }
+
+        .navbar .container {
+            padding-left: 20px !important; 
+            padding-right: 20px !important;
+        }
+
+        .navbar-toggler {
+            margin: 0 !important;
+        }
+
+        .navbar-spacer {
+            width: 45px;
+            visibility: hidden; 
+        }
+
+        .navbar-nav {
+            margin: 0 !important;
+            padding-left: 0 !important;
+        }
+
+        .navbar-nav .nav-item {
+            padding: 5px 0;
+        }
+
+        .navbar-nav .nav-link i {
+            min-width: 25px; 
+        }
+
+        /* ===================================== */
+        /* HERO PARALLAX - FIXED VERSION */
+        /* ===================================== */
+        .hero-parallax-js {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+            background: linear-gradient(to bottom, #87CEEB, #E0F6FF);
+        }
+
+        /* BASE PARALLAX ELEMENT */
+        .parallax-element {
+            position: absolute;
+            will-change: transform;
+            pointer-events: none;
+        }
+
+        /* LAYER 1: BACKGROUND AWAN (Paling Belakang) */
+        .parallax-bg {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1;
+            top: 0;
+            left: 0;
+        }
+
+        /* LAYER 2: AWAN KIRI */
+        .parallax-cloud-left {
+            width: 50%;
+            min-width: 350px;
+            max-width: 700px;
+            height: auto;
+            top: 10%;
+            left: -8%;
+            z-index: 2;
+        }
+
+        /* LAYER 3: AWAN KANAN */
+        .parallax-cloud-right {
+            width: 50%;
+            min-width: 350px;
+            max-width: 700px;
+            height: auto;
+            top: 8%;
+            right: -8%;
+            z-index: 3;
+        }
+
+        /* LAYER 4: TANGAN (Paling Depan) */
+        .parallax-hand {
+            width: 100%;
+            min-width: 100%;
+            max-width: none;
+            height: auto;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 4;
+        }
+
+        /* HERO CONTENT OVERLAY */
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            background: rgba(0, 0, 0, 0.4);
+            height: 100%;
+        }
+
+        /* ===================================== */
+        /* DASHBOARD DATA ALUMNI */
+        /* ===================================== */
+        
+        /* Total Alumni Card (Kiri) */
+        .total-alumni-card {
+            text-align: center;
+            padding: 40px 30px;
+            background: transparent;
+        }
+        
+        .total-alumni-icon {
+            font-size: 4rem;
+            color: #667eea;
+            margin-bottom: 20px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        .total-alumni-number {
+            font-size: 5rem;
+            font-weight: 700;
+            color: #2c3e50;
+            margin: 0;
+            line-height: 1;
+        }
+        
+        .total-alumni-label {
+            font-size: 1.5rem;
+            color: #7f8c8d;
+            margin-top: 10px;
+            font-weight: 500;
+        }
+        
+        .total-alumni-details {
+            margin-top: 30px;
+        }
+        
+        .detail-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 0;
+            gap: 12px;
+        }
+        
+        .detail-item i {
+            color: #667eea;
+            font-size: 1.2rem;
+        }
+        
+        .detail-label {
+            color: #34495e;
+            font-size: 1.05rem;
+        }
+        
+        /* Chart Cards */
+        .chart-card {
+            background: white;
+            border-radius: 20px;
+            padding: 35px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .chart-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 50px rgba(0,0,0,0.12);
+        }
+        
+        .chart-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 8px;
+        }
+        
+        .chart-subtitle {
+            font-size: 0.95rem;
+            color: #7f8c8d;
+            margin-bottom: 25px;
+        }
+        
+        /* Pie Chart */
+        .pie-chart-wrapper {
+            max-width: 350px;
+            margin: 30px auto;
+            position: relative;
+        }
+        
+        /* Chart Legend */
+        .chart-legend {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 25px;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .legend-dot {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+        
+        .legend-text {
+            flex: 1;
+            font-size: 1rem;
+            color: #34495e;
+        }
+        
+        .legend-percent {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #2c3e50;
+        }
+        
+        /* Bar Chart */
+        .bar-chart-wrapper {
+            margin-top: 30px;
+            height: 350px;
+        }
+        
+        /* Line Chart */
+        .line-chart-wrapper {
+            margin-top: 30px;
+            height: 350px;
+        }
+
+        /* ===================================== */
+        /* BERITA SECTION */
+        /* ===================================== */
+        
+        .news-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        .news-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+        
+        .news-card-image {
+            width: 100%;
+            height: 220px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .news-card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .news-card:hover .news-card-image img {
+            transform: scale(1.1);
+        }
+        
+        .news-card-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.7) 100%);
+        }
+        
+        .news-card-category {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: #667eea;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            z-index: 10;
+        }
+        
+        .news-card-date {
+            position: absolute;
+            bottom: 15px;
+            right: 15px;
+            background: rgba(255,255,255,0.9);
+            color: #2c3e50;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            z-index: 10;
+        }
+        
+        .news-card-content {
+            padding: 25px;
+        }
+        
+        .news-card-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+        
+        .news-card-excerpt {
+            color: #7f8c8d;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 0;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .news-card-full-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+            padding: 0 25px;
+        }
+        
+        .news-card.expanded .news-card-full-content {
+            max-height: 2000px;
+            padding: 0 25px 25px 25px;
+        }
+        
+        .news-card.expanded .news-card-excerpt {
+            display: none;
+        }
+        
+        .news-card-full-text {
+            color: #34495e;
+            font-size: 1rem;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+        
+        .news-card-read-more {
+            display: inline-block;
+            color: #667eea;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-top: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .news-card:hover .news-card-read-more {
+            color: #764ba2;
+            transform: translateX(5px);
+        }
+        
+        .news-card-read-more i {
+            transition: transform 0.3s ease;
+        }
+        
+        .news-card.expanded .news-card-read-more {
+            display: none;
+        }
+        
+        .news-card-close {
+            display: none;
+            text-align: center;
+            padding: 15px;
+            color: #667eea;
+            font-weight: 600;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        
+        .news-card.expanded .news-card-close {
+            display: block;
+        }
+        
+        .news-card-close:hover {
+            color: #764ba2;
+        }
+
+        /* ===================================== */
+        /* ACARA/EVENT CARD STYLES */
+        /* ===================================== */
+        
+        /* .event-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        .event-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        } */
+        
+        /* TANDA SERU ANIMASI DI POJOK KANAN ATAS */
+        .event-alert-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: linear-gradient(135deg, #ff4757 0%, #ff6348 100%);
+            color: white;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            z-index: 20;
+            box-shadow: 0 5px 20px rgba(255, 71, 87, 0.5);
+            animation: bounce 2s infinite, pulse-glow 1.5s infinite;
+            transform-origin: center;
+        }
+        
+        @keyframes pulse-glow {
+            0%, 100% {
+                box-shadow: 0 5px 20px rgba(255, 71, 87, 0.5);
+                transform: scale(1) rotate(-15deg);
+            }
+            50% {
+                box-shadow: 0 8px 30px rgba(255, 71, 87, 0.8);
+                transform: scale(1.1) rotate(-15deg);
+            }
+        }
+        
+        /* .event-card-image {
+            width: 100%;
+            height: 220px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .event-card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .event-card:hover .event-card-image img {
+            transform: scale(1.1);
+        }
+        
+        .event-card-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.7) 100%);
+        }
+        
+        .event-card-category {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: #38ef7d;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            z-index: 10;
+        }
+        
+        .event-card-date {
+            position: absolute;
+            bottom: 15px;
+            left: 15px;
+            background: rgba(255,255,255,0.95);
+            color: #2c3e50;
+            padding: 8px 15px;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .event-card-content {
+            padding: 25px;
+        }
+        
+        .event-card-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+        
+        .event-card-excerpt {
+            color: #7f8c8d;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .event-card-meta {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 10px;
+        }
+        
+        .event-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #667eea;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        
+        .event-meta-item i {
+            font-size: 1rem;
+        }
+        
+        .event-card-full-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+            padding: 0 25px;
+        }
+        
+        .event-card.expanded .event-card-full-content {
+            max-height: 2000px;
+            padding: 0 25px 25px 25px;
+        }
+        
+        .event-card.expanded .event-card-excerpt {
+            display: none;
+        }
+        
+        .event-card-full-text {
+            color: #34495e;
+            font-size: 1rem;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+        
+        .event-card-register-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+        
+        .event-card-register-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+            color: white;
+        }
+        
+        .event-card-read-more {
+            display: inline-block;
+            color: #667eea;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-top: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .event-card:hover .event-card-read-more {
+            color: #764ba2;
+            transform: translateX(5px);
+        }
+        
+        .event-card.expanded .event-card-read-more {
+            display: none;
+        }
+        
+        .event-card-close {
+            display: none;
+            text-align: center;
+            padding: 15px;
+            color: #667eea;
+            font-weight: 600;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        
+        .event-card.expanded .event-card-close {
+            display: block;
+        }
+        
+        .event-card-close:hover {
+            color: #764ba2;
+        }         */
+
+                /* ===================================== */
+        /* QUEST NOTIFICATION (GAME-STYLE) */
+        /* ===================================== */
+        
+        .quest-notification-container {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            z-index: 9999;
+            transition: right 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+        
+        .quest-notification-container.show {
+            right: 20px;
+        }
+        
+        .quest-notification-container.hide-left {
+            right: calc(100% + 50px);
+        }
+        
+        .quest-notification {
+            width: 350px;
+            background: linear-gradient(135deg, #1e1e2e 0%, #2d2d44 100%);
+            border: 3px solid #ff4757;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 15px 50px rgba(255, 71, 87, 0.6), 
+                        0 0 30px rgba(255, 71, 87, 0.3),
+                        inset 0 1px 0 rgba(255,255,255,0.1);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transform-origin: center right;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        
+        .quest-notification:hover {
+            transform: scale(1.05);
+            box-shadow: 0 20px 60px rgba(255, 71, 87, 0.8), 
+                        0 0 40px rgba(255, 71, 87, 0.5),
+                        inset 0 1px 0 rgba(255,255,255,0.2);
+        }
+        
+        .quest-notification::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #ff4757, #ff6348, #ff4757);
+            border-radius: 15px;
+            z-index: -1;
+            opacity: 0.3;
+            animation: pulse-border 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse-border {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(1.02); }
+        }
+        
+        .quest-notification-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 12px;
+        }
+        
+        .quest-alert-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #ff4757 0%, #ff6348 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            box-shadow: 0 5px 20px rgba(255, 71, 87, 0.5);
+            animation: bounce 2s infinite, rotate-subtle 3s ease-in-out infinite;
+        }
+        
+        @keyframes rotate-subtle {
+            0%, 100% { transform: rotate(-5deg); }
+            50% { transform: rotate(5deg); }
+        }
+        
+        .quest-alert-icon i {
+            font-size: 1.8rem;
+            color: white;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        
+        .quest-notification-content {
+            flex: 1;
+        }
+        
+        .quest-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #fff;
+            margin: 0 0 5px 0;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+            letter-spacing: 0.5px;
+        }
+        
+        .quest-description {
+            font-size: 0.9rem;
+            color: #ffd93d;
+            margin: 0;
+            font-weight: 600;
+            text-shadow: 0 1px 5px rgba(0,0,0,0.3);
+        }
+        
+        .quest-notification-body {
+            color: rgba(255,255,255,0.8);
+            font-size: 0.85rem;
+            line-height: 1.4;
+            margin-bottom: 12px;
+        }
+        
+        .quest-cta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: 10px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .quest-cta-text {
+            color: #4facfe;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .quest-cta-text i {
+            animation: arrow-move 1s ease-in-out infinite;
+        }
+        
+        @keyframes arrow-move {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(5px); }
+        }
+        
+        .quest-swipe-hint {
+            color: rgba(255,255,255,0.5);
+            font-size: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .quest-close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(255,71,87,0.2);
+            border: none;
+            color: white;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            z-index: 10;
+        }
+        
+        .quest-close-btn:hover {
+            background: rgba(255,71,87,0.5);
+            transform: rotate(90deg);
+        }
+        
+        /* Responsive Quest Notification */
+        @media (max-width: 768px) {
+            .quest-notification-container {
+                top: 80px;
+                right: -100%;
+            }
+            
+            .quest-notification-container.show {
+                right: 10px;
+            }
+            
+            .quest-notification {
+                width: calc(100vw - 20px);
+                max-width: 350px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .quest-notification {
+                padding: 15px;
+                max-width: 320px;
+            }
+            
+            .quest-alert-icon {
+                width: 45px;
+                height: 45px;
+            }
+            
+            .quest-alert-icon i {
+                font-size: 1.5rem;
+            }
+            
+            .quest-title {
+                font-size: 1rem;
+            }
+            
+            .quest-description {
+                font-size: 0.85rem;
+            }
+            
+            .quest-notification-body {
+                font-size: 0.8rem;
+            }
+        }
+
+        /* ===================================== */
+        /* ANIMATIONS */
+        /* ===================================== */
+        .animate-fade-in {
+            animation: fadeIn 2s ease-in;
+        }
+        .animate-slide-up {
+            animation: slideUp 1.5s ease-out;
+        }
+        .animate-bounce {
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        /* ===================================== */
+        /* PROFILE CARDS */
+        /* ===================================== */
+        
+        /* SLIDER CONTAINER */
+        .slider-container {
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 60px;
+        }
+        
+        .slider-wrapper {
+            overflow: hidden;
+            border-radius: 20px;
+        }
+        
+        .slider-track {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+        
+        /* SLIDER CARD */
+        .slider-card {
+            min-width: 100%;
+            padding: 20px;
+        }
+        
+        .slider-card-inner {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+            overflow: hidden;
+            display: flex;
+            flex-direction: row;
+            transition: transform 0.3s ease;
+        }
+        
+        .slider-card-inner:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+        }
+        
+        /* IMAGE SECTION */
+        .slider-card-image {
+            position: relative;
+            width: 40%;
+            min-height: 450px;
+        }
+        
+        .slider-card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .slider-card-badge {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        /* CONTENT SECTION */
+        .slider-card-content {
+            width: 60%;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .slider-card-name {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+        
+        .slider-card-year {
+            color: #667eea;
+            font-weight: 600;
+            font-size: 1rem;
+            margin-bottom: 10px;
+        }
+        
+        .slider-card-job {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #34495e;
+            margin-bottom: 15px;
+        }
+        
+        .slider-card-desc {
+            color: #7f8c8d;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            font-size: 1rem;
+        }
+        
+        .slider-card-achievements {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .achievement-tag {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+        
+        /* NAVIGATION BUTTONS */
+        .slider-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+            cursor: pointer;
+            z-index: 10;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: #667eea;
+        }
+        
+        .slider-btn:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-50%) scale(1.1);
+        }
+        
+        .slider-btn-prev {
+            left: 0;
+        }
+        
+        .slider-btn-next {
+            right: 0;
+        }
+        
+        /* INDICATORS (DOTS) */
+        .slider-indicators {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 30px;
+        }
+        
+        .indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #ddd;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .indicator.active {
+            background: #667eea;
+            width: 35px;
+            border-radius: 10px;
+        }
+        
+        .indicator:hover {
+            background: #764ba2;
+        }
+        
+        /* OLD PROFILE CARDS (untuk section alumni lainnya) */
+        .profil-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            overflow: hidden;
+        }
+        .profil-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+        .profil-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        /* ===================================== */
+        /* SLIDER RESPONSIVE */
+        /* ===================================== */
+        
+        /* Tablet (768px - 991px) */
+        @media (max-width: 991px) {
+            .slider-card-inner {
+                flex-direction: column;
+            }
+            
+            .slider-card-image {
+                width: 100%;
+                min-height: 350px;
+            }
+            
+            .slider-card-content {
+                width: 100%;
+                padding: 30px;
+            }
+            
+            .slider-card-name {
+                font-size: 1.6rem;
+            }
+            
+            .slider-card-job {
+                font-size: 1.1rem;
+            }
+            
+            .slider-container {
+                padding: 0 50px;
+            }
+        }
+        
+        /* Mobile (< 768px) */
+        @media (max-width: 767px) {
+            .slider-container {
+                padding: 0 40px;
+            }
+            
+            .slider-card {
+                padding: 10px;
+            }
+            
+            .slider-card-image {
+                min-height: 300px;
+            }
+            
+            .slider-card-content {
+                padding: 25px;
+            }
+            
+            .slider-card-name {
+                font-size: 1.4rem;
+            }
+            
+            .slider-card-job {
+                font-size: 1rem;
+            }
+            
+            .slider-card-desc {
+                font-size: 0.95rem;
+            }
+            
+            .slider-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
+            
+            .achievement-tag {
+                font-size: 0.8rem;
+                padding: 6px 12px;
+            }
+        }
+        
+        /* Mobile Kecil (< 576px) */
+        @media (max-width: 575px) {
+            .slider-container {
+                padding: 0 35px;
+            }
+            
+            .slider-card-image {
+                min-height: 250px;
+            }
+            
+            .slider-card-content {
+                padding: 20px;
+            }
+            
+            .slider-card-name {
+                font-size: 1.3rem;
+            }
+            
+            .slider-card-badge {
+                font-size: 0.8rem;
+                padding: 6px 15px;
+            }
+        }
+
+        /* ===================================== */
+        /* GALLERY */
+        /* ===================================== */
+        .gallery-img {
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        .gallery-img:hover {
+            transform: scale(1.05);
+        }
+
+        /* ===================================== */
+        /* RESPONSIVE */
+        /* ===================================== */
+        
+        /* Desktop Besar (1400px+) */
+        @media (min-width: 1400px) {
+            .parallax-cloud-left,
+            .parallax-cloud-right {
+                width: 45%;
+                min-width: 500px;
+            }
+        }
+        
+        /* Desktop (992px - 1399px) */
+        @media (min-width: 992px) and (max-width: 1399px) {
+            .parallax-cloud-left,
+            .parallax-cloud-right {
+                width: 48%;
+                min-width: 400px;
+            }
+        }
+        
+        /* Tablet (768px - 991px) */
+        @media (max-width: 991px) {
+            .hero-parallax-js {
+                height: 80vh;
+            }
+            
+            .parallax-cloud-left {
+                width: 55%;
+                min-width: 300px;
+                left: -10%;
+                top: 12%;
+            }
+            
+            .parallax-cloud-right {
+                width: 55%;
+                min-width: 300px;
+                right: -10%;
+                top: 10%;
+            }
+            
+            .parallax-hand {
+                width: 110%;
+            }
+            
+            .display-4 {
+                font-size: 2rem !important;
+            }
+            
+            .lead {
+                font-size: 1.1rem !important;
+            }
+        }
+
+        /* Mobile Besar (576px - 767px) */
+        @media (max-width: 767px) {
+            .hero-parallax-js {
+                height: 70vh;
+            }
+            
+            .parallax-cloud-left {
+                width: 60%;
+                min-width: 250px;
+                left: -12%;
+                top: 10%;
+            }
+            
+            .parallax-cloud-right {
+                width: 60%;
+                min-width: 250px;
+                right: -12%;
+                top: 8%;
+            }
+            
+            .parallax-hand {
+                width: 120%;
+            }
+            
+            .display-4 {
+                font-size: 1.8rem !important;
+            }
+            
+            .lead {
+                font-size: 1rem !important;
+            }
+        }
+
+        /* Mobile Kecil (< 576px) */
+        @media (max-width: 575px) {
+            .hero-parallax-js {
+                height: 65vh;
+            }
+            
+            .parallax-cloud-left {
+                width: 65%;
+                min-width: 200px;
+                left: -15%;
+                top: 8%;
+            }
+            
+            .parallax-cloud-right {
+                width: 65%;
+                min-width: 200px;
+                right: -15%;
+                top: 6%;
+            }
+            
+            .parallax-hand {
+                width: 130%;
+            }
+            
+            .display-4 {
+                font-size: 1.5rem !important;
+                line-height: 1.3 !important;
+            }
+            
+            .lead {
+                font-size: 0.95rem !important;
+            }
+            
+            .btn-lg {
+                font-size: 1rem !important;
+                padding: 0.6rem 1.2rem !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header dengan Navigasi Sticky -->
+    <header class="navbar navbar-dark bg-primary sticky-top shadow-lg">
+        <div class="container d-flex align-items-center"> 
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <a class="navbar-brand d-flex align-items-center mx-auto" href="#">
+                <span class="fw-bold">Alumni TKJ SMKN 1 Seyegan</span>
+            </a>
+
+            <div class="navbar-spacer"></div> 
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#home"><i class="fas fa-home"></i> Beranda</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#profil"><i class="fas fa-users"></i> Profil Alumni</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#berita"><i class="fas fa-newspaper"></i> Berita</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#acara"><i class="fas fa-calendar"></i> Acara</a></li>
+                    <!-- <li class="nav-item"><a class="nav-link" href="#galeri"><i class="fas fa-images"></i> Galeri</a></li> -->
+                    <li class="nav-item"><a class="nav-link" href="#kontak"><i class="fas fa-envelope"></i> Kontak</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section dengan Parallax FIXED -->
+    <section id="home" class="hero-parallax-js">
+        <!-- LAYER 1: Background Awan (Paling Belakang) -->
+        <img src="background_awan.png" alt="Background Langit" class="parallax-element parallax-bg" data-speed="0.2">
+        
+        <!-- LAYER 2: Awan Kiri -->
+        <img src="awan_kiri.png" alt="Awan Kiri" class="parallax-element parallax-cloud-left" data-speed="0.4">
+        
+        <!-- LAYER 3: Awan Kanan -->
+        <img src="awan_kanan.png" alt="Awan Kanan" class="parallax-element parallax-cloud-right" data-speed="0.5">
+        
+        <!-- LAYER 4: Tangan Alumni (Paling Depan) -->
+        <img src="tangan.png" alt="Tangan Alumni" class="parallax-element parallax-hand" data-speed="0.7">
+        
+        <!-- Text Overlay (Paling Atas) -->
+        <div class="hero-content d-flex align-items-center justify-content-center text-white">
+            <div class="container text-center px-3">
+                <h1 class="display-4 fw-bold animate-fade-in">Selamat Datang di Komunitas Alumni TKJ!</h1>
+                <p class="lead animate-slide-up">Terhubung, berkembang, dan berbagi pengalaman bersama para alumni Teknik Komputer dan Jaringan SMKN 1 Seyegan.</p>
+                <a href="#profil" class="btn btn-warning btn-lg mt-3 animate-bounce">Mari bereksplorasi</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Profil Alumni dengan Slider -->
+    <section id="profil" class="py-5 bg-light">
+        <div class="container">
+            <!-- Judul Section -->
+            <h1 class="text-center mb-2 fw-bold">5 Alumni Terbaik</h1>
+            <p class="text-center text-muted mb-5">Alumni berprestasi dari Jurusan TKJ</p>
+            
+            <!-- Slider Container -->
+            <div class="slider-container">
+                <!-- Tombol Previous -->
+                <button class="slider-btn slider-btn-prev" id="prevBtn">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                
+            <!-- Slider Indicators (Dots) -->
+            <div class="slider-indicators" id="sliderIndicators">
+                <span class="indicator active" data-slide="0"></span>
+                <span class="indicator" data-slide="1"></span>
+                <span class="indicator" data-slide="2"></span>
+                <span class="indicator" data-slide="3"></span>
+                <span class="indicator" data-slide="4"></span>
+            </div>
+            
+                <!-- Slider Wrapper -->
+                <div class="slider-wrapper">
+                    <div class="slider-track" id="sliderTrack">
+                        
+                        <!-- SLIDE 1 -->
+                        <div class="slider-card">
+                            <div class="slider-card-inner">
+                                <div class="slider-card-image">
+                                    <img src="debta.png" alt="Alumni 1">
+                                    <div class="slider-card-badge">⭐ Terbaik 1</div>
+                                </div>
+                                <div class="slider-card-content">
+                                    <h3 class="slider-card-name">Hamdullah Debta Erawan</h3>
+                                    <p class="slider-card-year">Angkatan 2020</p>
+                                    <p class="slider-card-job">Senior Software Engineer di Google</p>
+                                    <p class="slider-card-desc">Lulusan terbaik dengan IPK 4.0, sekarang bekerja sebagai Senior Engineer di Google Cloud Platform</p>
+                                    <div class="slider-card-achievements">
+                                        <span class="achievement-tag">🏆 Juara 1 LKS Nasional</span>
+                                        <span class="achievement-tag">💼 Google</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- SLIDE 2 -->
+                        <div class="slider-card">
+                            <div class="slider-card-inner">
+                                <div class="slider-card-image">
+                                    <img src="dhanda.png" alt="Alumni 2">
+                                    <div class="slider-card-badge">⭐ Terbaik 2</div>
+                                </div>
+                                <div class="slider-card-content">
+                                    <h3 class="slider-card-name">Dhanda Hendrawan Alisaputra</h3>
+                                    <p class="slider-card-year">Angkatan 2019</p>
+                                    <p class="slider-card-job">Network Architect di Telkom Indonesia</p>
+                                    <p class="slider-card-desc">Ahli dalam bidang Network Security dengan sertifikasi CCNP dan CISSP</p>
+                                    <div class="slider-card-achievements">
+                                        <span class="achievement-tag">🏅 CCNP Certified</span>
+                                        <span class="achievement-tag">🔐 CISSP</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- SLIDE 3 -->
+                        <div class="slider-card">
+                            <div class="slider-card-inner">
+                                <div class="slider-card-image">
+                                    <img src="agung.png" alt="Alumni 3">
+                                    <div class="slider-card-badge">⭐ Terbaik 3</div>
+                                </div>
+                                <div class="slider-card-content">
+                                    <h3 class="slider-card-name">Rizqy Agung Saputra</h3>
+                                    <p class="slider-card-year">Angkatan 2021</p>
+                                    <p class="slider-card-job">DevOps Engineer di Tokopedia</p>
+                                    <p class="slider-card-desc">Spesialis Cloud Infrastructure dan CI/CD Pipeline dengan pengalaman di berbagai startup unicorn</p>
+                                    <div class="slider-card-achievements">
+                                        <span class="achievement-tag">☁️ AWS Certified</span>
+                                        <span class="achievement-tag">🚀 DevOps Expert</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- SLIDE 4 -->
+                        <div class="slider-card">
+                            <div class="slider-card-inner">
+                                <div class="slider-card-image">
+                                    <img src="marsha.png" alt="Alumni 4">
+                                    <div class="slider-card-badge">⭐ Terbaik 4</div>
+                                </div>
+                                <div class="slider-card-content">
+                                    <h3 class="slider-card-name">Marsha Dewi Anggareni</h3>
+                                    <p class="slider-card-year">Angkatan 2020</p>
+                                    <p class="slider-card-job">Cybersecurity Analyst di Bank Mandiri</p>
+                                    <p class="slider-card-desc">Pakar keamanan siber dengan fokus pada penetration testing dan security audit</p>
+                                    <div class="slider-card-achievements">
+                                        <span class="achievement-tag">🛡️ CEH Certified</span>
+                                        <span class="achievement-tag">💰 Banking Sector</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- SLIDE 5 -->
+                        <div class="slider-card">
+                            <div class="slider-card-inner">
+                                <div class="slider-card-image">
+                                    <img src="rey.png" alt="Alumni 5">
+                                    <div class="slider-card-badge">⭐ Terbaik 5</div>
+                                </div>
+                                <div class="slider-card-content">
+                                    <h3 class="slider-card-name">Andika Reynand</h3>
+                                    <p class="slider-card-year">Angkatan 2022</p>
+                                    <p class="slider-card-job">Full Stack Developer di Gojek</p>
+                                    <p class="slider-card-desc">Developer muda berbakat dengan keahlian React, Node.js, dan Mobile Development</p>
+                                    <div class="slider-card-achievements">
+                                        <span class="achievement-tag">📱 Mobile Dev</span>
+                                        <span class="achievement-tag">⚡ Full Stack</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Tombol Next -->
+                <button class="slider-btn slider-btn-next" id="nextBtn">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+                        
+        </div>
+
+    <!-- QUEST NOTIFICATION -->
+    <div class="quest-notification-container" id="questNotification">
+        <div class="quest-notification" id="questCard">
+            <button class="quest-close-btn" onclick="closeQuestNotification(event)">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <div class="quest-notification-header">
+                <div class="quest-alert-icon">
+                    <i class="fas fa-exclamation"></i>
+                </div>
+                <div class="quest-notification-content">
+                    <h4 class="quest-title">⚡ Acara Mendatang</h4>
+                    <p class="quest-description">🎯 Lowongan Kerja IT</p>
+                </div>
+            </div>
+            
+            <div class="quest-notification-body">
+                IT Job Fair 2025 dengan 20+ perusahaan! On-the-spot interview. Jangan lewatkan!
+            </div>
+            
+            <div class="quest-cta">
+                <div class="quest-cta-text">
+                    <span>Klik untuk lihat detail</span>
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+                <div class="quest-swipe-hint">
+                    <i class="fas fa-hand-point-right"></i>
+                    <span>Swipe</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+        <!-- DATA ALUMNI DASHBOARD -->
+        <div class="container mt-5 pt-5">
+            <h2 class="text-center mb-2 fw-bold">Data Alumni</h2>
+            <p class="text-center text-muted mb-5">Statistik dan informasi alumni TKJ</p>
+            
+            <!-- Row 1: Total Alumni & Status Pekerjaan -->
+            <div class="row mb-5 align-items-center">
+                <!-- Total Alumni (Kiri) -->
+                <div class="col-lg-5 mb-4">
+                    <div class="total-alumni-card">
+                        <div class="total-alumni-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h2 class="total-alumni-number" data-target="250">0</h2>
+                        <p class="total-alumni-label">Total Alumni</p>
+                        <div class="total-alumni-details">
+                            <div class="detail-item">
+                                <i class="fas fa-graduation-cap"></i>
+                                <span class="detail-label">Angkatan 2019-2023</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-laptop-code"></i>
+                                <span class="detail-label">Jurusan TKJ</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-school"></i>
+                                <span class="detail-label">SMKN 1 Seyegan</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Diagram Lingkaran Status (Kanan) -->
+                <div class="col-lg-7 mb-4">
+                    <div class="chart-card">
+                        <h4 class="chart-title">Status Alumni</h4>
+                        <div class="pie-chart-wrapper">
+                            <canvas id="statusPieChart"></canvas>
+                        </div>
+                        <div class="chart-legend">
+                            <div class="legend-item">
+                                <span class="legend-dot" style="background: #667eea;"></span>
+                                <span class="legend-text">Sudah Bekerja</span>
+                                <span class="legend-percent">74%</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-dot" style="background: #f093fb;"></span>
+                                <span class="legend-text">Belum Bekerja</span>
+                                <span class="legend-percent">14%</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-dot" style="background: #38ef7d;"></span>
+                                <span class="legend-text">Melanjutkan Kuliah</span>
+                                <span class="legend-percent">12%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Row 2: Distribusi Bidang Pekerjaan -->
+            <div class="row mb-5">
+                <div class="col-12">
+                    <div class="chart-card">
+                        <h4 class="chart-title">Distribusi Bidang Pekerjaan</h4>
+                        <p class="chart-subtitle">Persentase alumni berdasarkan bidang keahlian</p>
+                        <div class="bar-chart-wrapper">
+                            <canvas id="jobFieldChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Row 3: Tren Alumni Yang Bekerja -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="chart-card">
+                        <h4 class="chart-title">Tren Alumni Yang Bekerja</h4>
+                        <p class="chart-subtitle">Perkembangan jumlah alumni yang bekerja (5 tahun terakhir)</p>
+                        <div class="line-chart-wrapper">
+                            <canvas id="trendLineChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Berita dengan Card Expandable -->
+    <section id="berita" class="py-5 bg-white">
+        <div class="container">
+            <h2 class="text-center mb-2 fw-bold">Acara, Berita dan Artikel</h2>
+            <p class="text-center text-muted mb-5">Update terbaru seputar dunia TKJ dan teknologi</p>
+            
+            <div class="row">
+                <!-- Event 1, acara mendatang menggunakann basis berita yang dimodifikasi ada nontifikasinya -->
+                <div class="col-lg-6">
+                    <div class="news-card" onclick="toggleNews(this)">
+                        <div class="event-alert-badge">!</div>
+                        <div class="news-card-image">
+                            <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&h=500&fit=crop" alt="Upgrade Alat TKJ">
+                            <div class="news-card-overlay"></div>
+                            <span class="news-card-category">Teknologi</span>
+                            <span class="news-card-date"><i class="fas fa-calendar-alt"></i> 15 Jan 2025</span>
+                        </div>
+                        <div class="news-card-content">
+                            <h3 class="news-card-title">Upgrade Alat TKJ: Server Baru dan Perangkat Networking Terbaru</h3>
+                            <p class="news-card-excerpt">
+                                Lab TKJ SMKN 1 Seyegan mendapat bantuan peralatan baru dari pemerintah untuk meningkatkan kualitas pembelajaran siswa...
+                            </p>
+                            <span class="news-card-read-more">Baca Selengkapnya <i class="fas fa-arrow-right"></i></span>
+                        </div>
+                        <div class="news-card-full-content">
+                            <p class="news-card-full-text">
+                                <strong>SEYEGAN</strong> - Lab TKJ SMKN 1 Seyegan mendapat bantuan peralatan baru dari pemerintah untuk meningkatkan kualitas pembelajaran siswa. Bantuan ini meliputi 20 unit server Dell PowerEdge terbaru, 50 switch managed Cisco Catalyst, dan berbagai perangkat networking modern lainnya.
+                                <br><br>
+                                Kepala Jurusan TKJ, Bapak Agus Priyanto, S.Kom., M.T., menyatakan bahwa upgrade ini sangat penting untuk mempersiapkan siswa menghadapi tantangan industri 4.0. "Dengan peralatan baru ini, siswa dapat praktik langsung dengan teknologi yang digunakan di dunia kerja," ujarnya.
+                                <br><br>
+                                Peralatan baru tersebut akan digunakan untuk praktikum mata pelajaran Administrasi Infrastruktur Jaringan, Administrasi Sistem Jaringan, dan Teknologi Layanan Jaringan. Diharapkan dengan adanya upgrade ini, kompetensi siswa TKJ semakin meningkat dan siap bersaing di dunia kerja.
+                                <br><br>
+                                Selain server dan switch, lab juga dilengkapi dengan router mikrotik, access point, dan perangkat keamanan jaringan seperti firewall. Total investasi untuk upgrade ini mencapai 500 juta rupiah, yang didanai oleh bantuan pemerintah pusat melalui program revitalisasi SMK.
+                            </p>
+                        </div>
+                        <div class="news-card-close">
+                            <i class="fas fa-times-circle"></i> Tutup
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Event 2 -->
+                <div class="col-lg-6">
+                    <div class="news-card" onclick="toggleNews(this)">
+                        <div class="event-alert-badge">!</div>
+                        <div class="news-card-image">
+                            <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&h=500&fit=crop" alt="Upgrade Alat TKJ">
+                            <div class="news-card-overlay"></div>
+                            <span class="news-card-category">Teknologi</span>
+                            <span class="news-card-date"><i class="fas fa-calendar-alt"></i> 15 Jan 2025</span>
+                        </div>
+                        <div class="news-card-content">
+                            <h3 class="news-card-title">Upgrade Alat TKJ: Server Baru dan Perangkat Networking Terbaru</h3>
+                            <p class="news-card-excerpt">
+                                Lab TKJ SMKN 1 Seyegan mendapat bantuan peralatan baru dari pemerintah untuk meningkatkan kualitas pembelajaran siswa...
+                            </p>
+                            <span class="news-card-read-more">Baca Selengkapnya <i class="fas fa-arrow-right"></i></span>
+                        </div>
+                        <div class="news-card-full-content">
+                            <p class="news-card-full-text">
+                                <strong>SEYEGAN</strong> - Lab TKJ SMKN 1 Seyegan mendapat bantuan peralatan baru dari pemerintah untuk meningkatkan kualitas pembelajaran siswa. Bantuan ini meliputi 20 unit server Dell PowerEdge terbaru, 50 switch managed Cisco Catalyst, dan berbagai perangkat networking modern lainnya.
+                                <br><br>
+                                Kepala Jurusan TKJ, Bapak Agus Priyanto, S.Kom., M.T., menyatakan bahwa upgrade ini sangat penting untuk mempersiapkan siswa menghadapi tantangan industri 4.0. "Dengan peralatan baru ini, siswa dapat praktik langsung dengan teknologi yang digunakan di dunia kerja," ujarnya.
+                                <br><br>
+                                Peralatan baru tersebut akan digunakan untuk praktikum mata pelajaran Administrasi Infrastruktur Jaringan, Administrasi Sistem Jaringan, dan Teknologi Layanan Jaringan. Diharapkan dengan adanya upgrade ini, kompetensi siswa TKJ semakin meningkat dan siap bersaing di dunia kerja.
+                                <br><br>
+                                Selain server dan switch, lab juga dilengkapi dengan router mikrotik, access point, dan perangkat keamanan jaringan seperti firewall. Total investasi untuk upgrade ini mencapai 500 juta rupiah, yang didanai oleh bantuan pemerintah pusat melalui program revitalisasi SMK.
+                            </p>
+                        </div>
+                        <div class="news-card-close">
+                            <i class="fas fa-times-circle"></i> Tutup
+                        </div>
+                    </div>
+                </div>
+        
+                <!-- Berita 1 -->
+                <div class="col-lg-6">
+                    <div class="news-card" onclick="toggleNews(this)">
+                        <div class="news-card-image">
+                            <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&h=500&fit=crop" alt="Upgrade Alat TKJ">
+                            <div class="news-card-overlay"></div>
+                            <span class="news-card-category">Teknologi</span>
+                            <span class="news-card-date"><i class="fas fa-calendar-alt"></i> 15 Jan 2025</span>
+                        </div>
+                        <div class="news-card-content">
+                            <h3 class="news-card-title">Upgrade Alat TKJ: Server Baru dan Perangkat Networking Terbaru</h3>
+                            <p class="news-card-excerpt">
+                                Lab TKJ SMKN 1 Seyegan mendapat bantuan peralatan baru dari pemerintah untuk meningkatkan kualitas pembelajaran siswa...
+                            </p>
+                            <span class="news-card-read-more">Baca Selengkapnya <i class="fas fa-arrow-right"></i></span>
+                        </div>
+                        <div class="news-card-full-content">
+                            <p class="news-card-full-text">
+                                <strong>SEYEGAN</strong> - Lab TKJ SMKN 1 Seyegan mendapat bantuan peralatan baru dari pemerintah untuk meningkatkan kualitas pembelajaran siswa. Bantuan ini meliputi 20 unit server Dell PowerEdge terbaru, 50 switch managed Cisco Catalyst, dan berbagai perangkat networking modern lainnya.
+                                <br><br>
+                                Kepala Jurusan TKJ, Bapak Agus Priyanto, S.Kom., M.T., menyatakan bahwa upgrade ini sangat penting untuk mempersiapkan siswa menghadapi tantangan industri 4.0. "Dengan peralatan baru ini, siswa dapat praktik langsung dengan teknologi yang digunakan di dunia kerja," ujarnya.
+                                <br><br>
+                                Peralatan baru tersebut akan digunakan untuk praktikum mata pelajaran Administrasi Infrastruktur Jaringan, Administrasi Sistem Jaringan, dan Teknologi Layanan Jaringan. Diharapkan dengan adanya upgrade ini, kompetensi siswa TKJ semakin meningkat dan siap bersaing di dunia kerja.
+                                <br><br>
+                                Selain server dan switch, lab juga dilengkapi dengan router mikrotik, access point, dan perangkat keamanan jaringan seperti firewall. Total investasi untuk upgrade ini mencapai 500 juta rupiah, yang didanai oleh bantuan pemerintah pusat melalui program revitalisasi SMK.
+                            </p>
+                        </div>
+                        <div class="news-card-close">
+                            <i class="fas fa-times-circle"></i> Tutup
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Berita 2 -->
+                <div class="col-lg-6">
+                    <div class="news-card" onclick="toggleNews(this)">
+                        <div class="news-card-image">
+                            <img src="https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=800&h=500&fit=crop" alt="Lomba IT">
+                            <div class="news-card-overlay"></div>
+                            <span class="news-card-category">Prestasi</span>
+                            <span class="news-card-date"><i class="fas fa-calendar-alt"></i> 10 Jan 2025</span>
+                        </div>
+                        <div class="news-card-content">
+                            <h3 class="news-card-title">Siswa TKJ Raih Juara 1 Lomba IT Network Systems Administration</h3>
+                            <p class="news-card-excerpt">
+                                Tim TKJ SMKN 1 Seyegan berhasil meraih juara 1 dalam lomba IT Network Systems Administration tingkat provinsi DIY...
+                            </p>
+                            <span class="news-card-read-more">Baca Selengkapnya <i class="fas fa-arrow-right"></i></span>
+                        </div>
+                        <div class="news-card-full-content">
+                            <p class="news-card-full-text">
+                                <strong>YOGYAKARTA</strong> - Tim TKJ SMKN 1 Seyegan yang terdiri dari Rizky Pratama (XII TKJ 1) dan Dimas Adi Saputra (XII TKJ 2) berhasil meraih juara 1 dalam lomba IT Network Systems Administration tingkat provinsi DIY yang diselenggarakan di Universitas Gadjah Mada.
+                                <br><br>
+                                Kompetisi yang berlangsung selama 2 hari ini menguji kemampuan peserta dalam merancang, mengkonfigurasi, dan mengelola infrastruktur jaringan skala enterprise. Tim dari SMKN 1 Seyegan berhasil mengungguli 25 tim dari berbagai SMK di DIY.
+                                <br><br>
+                                "Kami sangat bangga dengan prestasi ini. Ini membuktikan bahwa kualitas pendidikan di jurusan TKJ kami tidak kalah dengan sekolah-sekolah favorit lainnya," ujar Pembina tim, Ibu Sri Wahyuni, S.Pd.
+                                <br><br>
+                                Sebagai juara 1, tim berhak mewakili DIY dalam kompetisi tingkat nasional yang akan diselenggarakan di Jakarta bulan depan. Sekolah memberikan dukungan penuh untuk persiapan tim menghadapi kompetisi nasional tersebut.
+                            </p>
+                        </div>
+                        <div class="news-card-close">
+                            <i class="fas fa-times-circle"></i> Tutup
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Berita 3 -->
+                <div class="col-lg-6">
+                    <div class="news-card" onclick="toggleNews(this)">
+                        <div class="news-card-image">
+                            <img src="https://images.unsplash.com/photo-1573164713988-8665fc963095?w=800&h=500&fit=crop" alt="Workshop Cybersecurity">
+                            <div class="news-card-overlay"></div>
+                            <span class="news-card-category">Workshop</span>
+                            <span class="news-card-date"><i class="fas fa-calendar-alt"></i> 5 Jan 2025</span>
+                        </div>
+                        <div class="news-card-content">
+                            <h3 class="news-card-title">Workshop Cybersecurity: Melindungi Jaringan dari Serangan Siber</h3>
+                            <p class="news-card-excerpt">
+                                Jurusan TKJ mengadakan workshop cybersecurity yang diikuti oleh seluruh siswa kelas XI dan XII untuk meningkatkan awareness...
+                            </p>
+                            <span class="news-card-read-more">Baca Selengkapnya <i class="fas fa-arrow-right"></i></span>
+                        </div>
+                        <div class="news-card-full-content">
+                            <p class="news-card-full-text">
+                                <strong>SEYEGAN</strong> - Jurusan TKJ SMKN 1 Seyegan mengadakan workshop cybersecurity dengan tema "Protecting Networks in Digital Era". Workshop ini diikuti oleh 120 siswa kelas XI dan XII TKJ dan menghadirkan narasumber dari industri.
+                                <br><br>
+                                Narasumber, Bapak Andi Wijaya, Certified Ethical Hacker dari PT Cyber Security Indonesia, memberikan materi tentang berbagai jenis serangan siber seperti DDoS, SQL Injection, dan Man-in-the-Middle Attack. Siswa juga diajari cara menggunakan tools security seperti Wireshark, Nmap, dan Metasploit.
+                                <br><br>
+                                "Cybersecurity adalah skill yang sangat penting di era digital. Saya berharap siswa dapat menerapkan ilmu yang didapat untuk melindungi infrastruktur jaringan di dunia kerja nanti," ujar Bapak Andi.
+                                <br><br>
+                                Workshop ini juga melibatkan sesi hands-on dimana siswa diminta untuk mengidentifikasi dan memperbaiki vulnerability pada sebuah network simulation. Antusiasme siswa sangat tinggi, terbukti dari banyaknya pertanyaan yang diajukan selama sesi tanya jawab.
+                            </p>
+                        </div>
+                        <div class="news-card-close">
+                            <i class="fas fa-times-circle"></i> Tutup
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Berita 4 -->
+                <div class="col-lg-6">
+                    <div class="news-card" onclick="toggleNews(this)">
+                        <div class="news-card-image">
+                            <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&h=500&fit=crop" alt="Kerjasama Industri">
+                            <div class="news-card-overlay"></div>
+                            <span class="news-card-category">Kerjasama</span>
+                            <span class="news-card-date"><i class="fas fa-calendar-alt"></i> 28 Des 2024</span>
+                        </div>
+                        <div class="news-card-content">
+                            <h3 class="news-card-title">Kerjasama dengan PT Telkom: Program Magang dan Job Placement</h3>
+                            <p class="news-card-excerpt">
+                                SMKN 1 Seyegan menjalin kerjasama dengan PT Telkom Indonesia untuk program magang siswa dan job placement alumni...
+                            </p>
+                            <span class="news-card-read-more">Baca Selengkapnya <i class="fas fa-arrow-right"></i></span>
+                        </div>
+                        <div class="news-card-full-content">
+                            <p class="news-card-full-text">
+                                <strong>SEYEGAN</strong> - SMKN 1 Seyegan resmi menjalin kerjasama dengan PT Telkom Indonesia dalam program magang siswa dan job placement alumni. MoU ditandatangani oleh Kepala Sekolah dan Regional Manager Telkom DIY.
+                                <br><br>
+                                Melalui kerjasama ini, siswa kelas XII TKJ akan mendapat kesempatan magang di berbagai divisi Telkom seperti Network Operation Center, Data Center, dan IT Support. Program magang berlangsung selama 3 bulan dan siswa akan dibimbing langsung oleh praktisi berpengalaman.
+                                <br><br>
+                                "Ini adalah kesempatan emas bagi siswa untuk belajar langsung dari industri. Selain mendapat pengalaman, siswa juga berkesempatan untuk direkrut sebagai karyawan setelah lulus," ungkap Kepala Sekolah, Bapak Drs. Supardi, M.Pd.
+                                <br><br>
+                                Selain program magang, Telkom juga akan memberikan beasiswa bagi 10 siswa berprestasi dan menyediakan trainer untuk mengajar mata pelajaran tertentu. Kerjasama ini diharapkan dapat meningkatkan daya saing lulusan TKJ di dunia kerja.
+                            </p>
+                        </div>
+                        <div class="news-card-close">
+                            <i class="fas fa-times-circle"></i> Tutup
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Berita 5 -->
+                <div class="col-lg-6">
+                    <div class="news-card" onclick="toggleNews(this)">
+                        <div class="news-card-image">
+                            <img src="https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=800&h=500&fit=crop" alt="Sertifikasi">
+                            <div class="news-card-overlay"></div>
+                            <span class="news-card-category">Sertifikasi</span>
+                            <span class="news-card-date"><i class="fas fa-calendar-alt"></i> 20 Des 2024</span>
+                        </div>
+                        <div class="news-card-content">
+                            <h3 class="news-card-title">Siswa TKJ Raih Sertifikasi Internasional Cisco CCNA</h3>
+                            <p class="news-card-excerpt">
+                                Sebanyak 15 siswa kelas XII TKJ berhasil meraih sertifikasi internasional Cisco CCNA setelah mengikuti training intensif...
+                            </p>
+                            <span class="news-card-read-more">Baca Selengkapnya <i class="fas fa-arrow-right"></i></span>
+                        </div>
+                        <div class="news-card-full-content">
+                            <p class="news-card-full-text">
+                                <strong>SEYEGAN</strong> - Prestasi membanggakan kembali diraih siswa TKJ SMKN 1 Seyegan. Sebanyak 15 siswa kelas XII berhasil meraih sertifikasi internasional Cisco CCNA (Cisco Certified Network Associate) setelah mengikuti training intensif selama 6 bulan.
+                                <br><br>
+                                Sertifikasi CCNA merupakan sertifikasi entry-level dari Cisco yang sangat dihargai di industri IT. Dengan sertifikasi ini, siswa telah terbukti memiliki kompetensi dalam menginstal, mengkonfigurasi, mengoperasikan, dan troubleshooting jaringan skala menengah.
+                                <br><br>
+                                "Sertifikasi CCNA adalah investasi penting untuk masa depan karir di bidang networking. Ini akan menjadi nilai tambah yang signifikan saat melamar pekerjaan," kata Instruktur CCNA, Bapak Bambang Sutrisno, CCNP.
+                                <br><br>
+                                Training CCNA ini didukung oleh Cisco Networking Academy dan biaya ujian sertifikasi ditanggung sepenuhnya oleh sekolah. Ke depan, sekolah berencana untuk mengadakan training sertifikasi lanjutan seperti CCNP dan cybersecurity.
+                            </p>
+                        </div>
+                        <div class="news-card-close">
+                            <i class="fas fa-times-circle"></i> Tutup
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Berita 6 -->
+                <div class="col-lg-6">
+                    <div class="news-card" onclick="toggleNews(this)">
+                        <div class="news-card-image">
+                            <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?w=800&h=500&fit=crop" alt="Alumni Gathering">
+                            <div class="news-card-overlay"></div>
+                            <span class="news-card-category">Alumni</span>
+                            <span class="news-card-date"><i class="fas fa-calendar-alt"></i> 15 Des 2024</span>
+                        </div>
+                        <div class="news-card-content">
+                            <h3 class="news-card-title">Alumni Gathering 2024: Sharing Session dan Networking</h3>
+                            <p class="news-card-excerpt">
+                                Alumni TKJ SMKN 1 Seyegan berkumpul dalam acara Alumni Gathering 2024 yang dihadiri lebih dari 100 alumni dari berbagai angkatan...
+                            </p>
+                            <span class="news-card-read-more">Baca Selengkapnya <i class="fas fa-arrow-right"></i></span>
+                        </div>
+                        <div class="news-card-full-content">
+                            <p class="news-card-full-text">
+                                <strong>SEYEGAN</strong> - Alumni TKJ SMKN 1 Seyegan mengadakan Alumni Gathering 2024 yang dihadiri lebih dari 100 alumni dari angkatan 2015 hingga 2023. Acara ini bertujuan untuk mempererat tali silaturahmi dan berbagi pengalaman karir di dunia IT.
+                                <br><br>
+                                Acara dibuka dengan sambutan dari Ketua Alumni TKJ, Mas Andi Wijaya (Alumni 2015) yang kini bekerja sebagai Network Engineer di perusahaan multinasional. Dilanjutkan dengan sharing session dari alumni yang sukses di berbagai bidang IT.
+                                <br><br>
+                                "Acara ini sangat bermanfaat, terutama bagi alumni muda yang baru lulus. Mereka bisa belajar dari pengalaman senior dan mendapat insight tentang dunia kerja," ujar Mbak Sari Indah (Alumni 2018), yang kini menjadi IT Manager di startup teknologi.
+                                <br><br>
+                                Selain sharing session, acara juga dimeriahkan dengan games, doorprize, dan networking session. Beberapa alumni yang bekerja di perusahaan besar juga membuka lowongan kerja dan menawarkan program mentoring untuk adik-adik kelas yang masih sekolah.
+                            </p>
+                        </div>
+                        <div class="news-card-close">
+                            <i class="fas fa-times-circle"></i> Tutup
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Galeri dengan Modal -->
+    <!-- <section id="galeri" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center mb-4 fw-bold">Galeri Alumni</h2>
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <img src="https://via.placeholder.com/300x200?text=Reuni+TKJ" alt="Reuni" class="img-fluid rounded gallery-img" data-bs-toggle="modal" data-bs-target="#galleryModal" data-src="https://via.placeholder.com/800x600?text=Reuni+TKJ">
+                </div>
+            </div>
+        </div>
+    </section> -->
+
+    <!-- Modal untuk Galeri -->
+    <!-- <div class="modal fade" id="galleryModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-body text-center">
+                    <img id="modal-img" src="" class="img-fluid">
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+    <!-- Kontak dengan Form -->
+    <section id="kontak" class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-4 fw-bold">Hubungi Kami</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <form id="contact-form">
+                        <div class="mb-3">
+                            <input type="text" class="form-control" id="name" placeholder="Nama" required>
+                        </div>
+                        <div class="mb-3">
+                            <input type="email" class="form-control" id="email" placeholder="Email" required>
+                        </div>
+                        <div class="mb-3">
+                            <textarea class="form-control" id="message" rows="4" placeholder="Pesan" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Kirim</button>
+                    </form>
+                </div>
+                <!-- <div class="col-md-6">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3956.5!2d112.7!3d-7.8!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zN8KwNDgnMDAuMCJTIDExMsKwNDInMDAuMCJF!5e0!3m2!1sen!2sid!4v1630000000000!5m2!1sen!2sid" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                </div> -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4">
+        <div class="container text-center">
+            <p>&copy; ADD Team 2025 TKJ SMKN 1 SEYEGAN</p>
+            <div class="social-links">
+                <a href="#" class="text-white me-3"><i class="fab fa-facebook fa-2x"></i></a>
+                <a href="#" class="text-white me-3"><i class="fab fa-instagram fa-2x"></i></a>
+                <a href="#" class="text-white"><i class="fab fa-linkedin fa-2x"></i></a>
+            </div>
+        </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script> 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+    // ========================================
+    // SLIDER FUNCTIONALITY
+    // ========================================
+    let currentSlide = 0;
+    const totalSlides = 5;
+    const sliderTrack = document.getElementById('sliderTrack');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const indicators = document.querySelectorAll('.indicator');
+
+    function updateSlider() {
+        // Move slider
+        const offset = -currentSlide * 100;
+        sliderTrack.style.transform = `translateX(${offset}%)`;
+
+        // Update indicators
+        indicators.forEach((indicator, index) => {
+            if (index === currentSlide) {
+                indicator.classList.add('active');
+            } else {
+                indicator.classList.remove('active');
+            }
+        });
+    }
+
+    // Next button
+    nextBtn.addEventListener('click', () => {
+        currentSlide = (currentSlide + 1) % totalSlides;
+        updateSlider();
+    });
+
+    // Previous button
+    prevBtn.addEventListener('click', () => {
+        currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+        updateSlider();
+    });
+
+    // Indicator clicks
+    indicators.forEach((indicator, index) => {
+        indicator.addEventListener('click', () => {
+            currentSlide = index;
+            updateSlider();
+        });
+    });
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft') {
+            prevBtn.click();
+        } else if (e.key === 'ArrowRight') {
+            nextBtn.click();
+        }
+    });
+
+    // Touch swipe support
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    sliderTrack.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+    });
+
+    sliderTrack.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipe();
+    });
+
+    function handleSwipe() {
+        if (touchStartX - touchEndX > 50) {
+            // Swipe left
+            nextBtn.click();
+        }
+        if (touchEndX - touchStartX > 50) {
+            // Swipe right
+            prevBtn.click();
+        }
+    }
+
+    // Auto slide (optional - uncomment to enable)
+    // setInterval(() => {
+    //     nextBtn.click();
+    // }, 5000);
+
+    // ========================================
+    // ALUMNI DATA & RENDER
+    // ========================================
+    const alumniData = [
+        { name: 'Ahmad Surya', year: '2020', job: 'Software Engineer', img: 'debta_model.png' },
+        { name: 'Siti Nurhaliza', year: '2019', job: 'Network Admin', img: 'https://via.placeholder.com/300x200?text=Siti' },
+        { name: 'Alea Farrel', year: '2025', job: 'Software Engineer', img: 'https://via.placeholder.com/300x200?text=Farrel' },
+    ];
+
+    // Render Profil
+    // function renderProfiles(filter = '', search = '') {
+    //     const grid = document.getElementById('profil-grid');
+    //     grid.innerHTML = '';
+    //     alumniData.filter(a => (filter === '' || a.year === filter) && (search === '' || a.name.toLowerCase().includes(search.toLowerCase()))).forEach(alumni => {
+    //         const card = `
+    //             <div class="col-md-4 mb-4">
+    //                 <div class="card profil-card">
+    //                     <img src="${alumni.img}" class="card-img-top" alt="${alumni.name}">
+    //                     <div class="card-body">
+    //                         <h5 class="card-title">${alumni.name}</h5>
+    //                         <p class="card-text">Angkatan ${alumni.year} - ${alumni.job}</p>
+    //                         <a href="#" class="btn btn-primary">Lihat Profil</a>
+    //                     </div>
+    //                 </div>
+    //             </div>
+    //         `;
+    //         grid.innerHTML += card;
+    //     });
+    // }
+    // renderProfiles(); // Panggil fungsi inisialisasi
+
+    // Search dan Filter
+    // Panggil renderProfiles setelah diinisialisasi
+    // const searchInput = document.getElementById('search');
+    // const filterSelect = document.getElementById('filter');
+    // if (searchInput && filterSelect) {
+    //     searchInput.addEventListener('input', (e) => renderProfiles(filterSelect.value, e.target.value));
+    //     filterSelect.addEventListener('change', (e) => renderProfiles(e.target.value, searchInput.value));
+    // }
+
+    // Modal Galeri
+    document.querySelectorAll('.gallery-img').forEach(img => {
+        img.addEventListener('click', () => {
+            const modalImg = document.getElementById('modal-img');
+            if (modalImg) {
+                modalImg.src = img.getAttribute('data-src');
+            }
+        });
+    });
+
+    // Form Kontak
+    const contactForm = document.getElementById('contact-form');
+    if (contactForm) {
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('name')?.value;
+            const email = document.getElementById('email')?.value;
+            const message = document.getElementById('message')?.value;
+            if (name && email && message) {
+                alert('Pesan terkirim! Terima kasih.');
+            } else {
+                alert('Harap isi semua field.');
+            }
+        });
+    }
+
+    // PARALLAX EFFECT
+    document.addEventListener('scroll', () => {
+        const scrollPosition = window.scrollY;
+        
+        document.querySelectorAll('.parallax-element').forEach(element => {
+            const speed = parseFloat(element.getAttribute('data-speed'));
+            const yOffset = -(scrollPosition * speed);
+            element.style.transform = element.classList.contains('parallax-hand') 
+                ? `translate(-50%, ${yOffset}px)` 
+                : `translateY(${yOffset}px)`;
+        });
+    });
+
+
+    // ========================================
+    // NEWS CARD TOGGLE FUNCTION
+    // FUNGSI INI HARUS BERADA DI LINGKUP GLOBAL
+    // ========================================
+    function toggleNews(card) {
+        // Tutup semua card lain yang terbuka
+        document.querySelectorAll('.news-card').forEach(c => {
+            if (c !== card) {
+                c.classList.remove('expanded');
+            }
+        });
+        
+        // Toggle card yang diklik
+        card.classList.toggle('expanded');
+        
+        // Scroll smooth ke card
+        if (card.classList.contains('expanded')) {
+            card.scrollIntoView({ behavior: 'smooth', block: 'start' }); // Saya tambahkan block: 'start' agar lebih rapi
+        }
+    }
+
+    // ========================================
+    // COUNTER ANIMATION - Total Alumni
+    // ========================================
+    function animateCounter() {
+        const counter = document.querySelector('.total-alumni-number');
+        if (!counter) return;
+        
+        const target = parseInt(counter.getAttribute('data-target'));
+        const duration = 2000;
+        const increment = target / (duration / 16);
+        let current = 0;
+        
+        const timer = setInterval(() => {
+            current += increment;
+            if (current >= target) {
+                counter.textContent = target;
+                clearInterval(timer);
+            } else {
+                counter.textContent = Math.floor(current);
+            }
+        }, 16);
+    }
+
+    // Trigger animation when section is visible
+    const totalCard = document.querySelector('.total-alumni-card');
+    if (totalCard) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateCounter();
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+        
+        observer.observe(totalCard);
+    }
+
+    // ========================================
+    // INITIALIZE CHARTS AFTER PAGE LOAD
+    // ========================================
+    window.addEventListener('load', function() {
+        // Check if Chart.js is loaded
+        if (typeof Chart === 'undefined') {
+            console.error('Chart.js tidak ter-load! Periksa koneksi internet atau CDN.');
+            return;
+        }
+        
+        console.log('Chart.js berhasil di-load!');
+        
+        // ========================================
+        // PIE CHART - Status Alumni
+        // ========================================
+        const statusCtx = document.getElementById('statusPieChart');
+        if (statusCtx) {
+            try {
+                new Chart(statusCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Sudah Bekerja', 'Belum Bekerja', 'Melanjutkan Kuliah'],
+                        datasets: [{
+                            data: [185, 35, 30],
+                            backgroundColor: [
+                                '#667eea',
+                                '#f093fb',
+                                '#38ef7d'
+                            ],
+                            borderWidth: 0,
+                            hoverOffset: 15
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: true,
+                        plugins: {
+                            legend: {
+                                display: false
+                            },
+                            tooltip: {
+                                backgroundColor: 'rgba(0,0,0,0.8)',
+                                padding: 12,
+                                bodyFont: {
+                                    size: 14
+                                },
+                                callbacks: {
+                                    label: function(context) {
+                                        const label = context.label || '';
+                                        const value = context.parsed;
+                                        const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                        const percentage = Math.round((value / total) * 100);
+                                        return `${label}: ${value} alumni (${percentage}%)`;
+                                    }
+                                }
+                            }
+                        },
+                        cutout: '65%',
+                        animation: {
+                            animateRotate: true,
+                            animateScale: true,
+                            duration: 1500,
+                            easing: 'easeInOutQuart'
+                        }
+                    }
+                });
+                console.log('Pie Chart berhasil dibuat!');
+            } catch (error) {
+                console.error('Error membuat Pie Chart:', error);
+            }
+        } else {
+            console.error('Canvas statusPieChart tidak ditemukan!');
+        }
+        
+        // ========================================
+        // HORIZONTAL BAR CHART - Bidang Pekerjaan
+        // ========================================
+        const jobFieldCtx = document.getElementById('jobFieldChart');
+        if (jobFieldCtx) {
+            try {
+                new Chart(jobFieldCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Software Development', 'Network Engineering', 'Cybersecurity', 'Hardware/IT Support', 'Web Development', 'Data Science', 'Lainnya'],
+                        datasets: [{
+                            label: 'Jumlah Alumni',
+                            data: [85, 45, 28, 35, 52, 20, 60],
+                            backgroundColor: [
+                                'rgba(102, 126, 234, 0.8)',
+                                'rgba(116, 75, 162, 0.8)',
+                                'rgba(240, 147, 251, 0.8)',
+                                'rgba(56, 239, 125, 0.8)',
+                                'rgba(37, 99, 235, 0.8)',
+                                'rgba(220, 38, 38, 0.8)',
+                                'rgba(128, 128, 128, 0.8)'
+                            ],
+                            borderRadius: 8,
+                            barThickness: 35
+                        }]
+                    },
+                    options: {
+                        indexAxis: 'y',
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false
+                            },
+                            tooltip: {
+                                backgroundColor: 'rgba(0,0,0,0.8)',
+                                padding: 12,
+                                bodyFont: {
+                                    size: 14
+                                },
+                                callbacks: {
+                                    label: function(context) {
+                                        const value = context.parsed.x;
+                                        const percentage = Math.round((value / 250) * 100);
+                                        return `${value} alumni (${percentage}%)`;
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            x: {
+                                beginAtZero: true,
+                                max: 100,
+                                grid: {
+                                    color: 'rgba(0,0,0,0.05)'
+                                },
+                                ticks: {
+                                    font: {
+                                        size: 12
+                                    }
+                                }
+                            },
+                            y: {
+                                grid: {
+                                    display: false
+                                },
+                                ticks: {
+                                    font: {
+                                        size: 13,
+                                        weight: '500'
+                                    }
+                                }
+                            }
+                        },
+                        animation: {
+                            duration: 1500,
+                            easing: 'easeInOutQuart'
+                        }
+                    }
+                });
+                console.log('Bar Chart berhasil dibuat!');
+            } catch (error) {
+                console.error('Error membuat Bar Chart:', error);
+            }
+        } else {
+            console.error('Canvas jobFieldChart tidak ditemukan!');
+        }
+        
+        // ========================================
+        // LINE CHART - Tren Alumni Bekerja
+        // ========================================
+        const trendCtx = document.getElementById('trendLineChart');
+        if (trendCtx) {
+            try {
+                new Chart(trendCtx, {
+                    type: 'line',
+                    data: {
+                        labels: ['2019', '2020', '2021', '2022', '2023','2024','2025'],
+                        datasets: [{
+                            label: 'Alumni Bekerja',
+                            data: [28, 42, 58, 75, 89, 90, 80],
+                            borderColor: '#667eea',
+                            backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                            borderWidth: 3,
+                            fill: true,
+                            tension: 0.4,
+                            pointRadius: 6,
+                            pointHoverRadius: 8,
+                            pointBackgroundColor: '#667eea',
+                            pointBorderColor: '#fff',
+                            pointBorderWidth: 2
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false
+                            },
+                            tooltip: {
+                                backgroundColor: 'rgba(0,0,0,0.8)',
+                                padding: 12,
+                                bodyFont: {
+                                    size: 14
+                                },
+                                callbacks: {
+                                    label: function(context) {
+                                        return `${context.parsed.y} alumni bekerja`;
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            x: {
+                                grid: {
+                                    color: 'rgba(0,0,0,0.05)'
+                                },
+                                ticks: {
+                                    font: {
+                                        size: 13,
+                                        weight: '500'
+                                    }
+                                }
+                            },
+                            y: {
+                                beginAtZero: true,
+                                max: 100,
+                                grid: {
+                                    color: 'rgba(0,0,0,0.05)'
+                                },
+                                ticks: {
+                                    font: {
+                                        size: 12
+                                    }
+                                }
+                            }
+                        },
+                        animation: {
+                            duration: 2000,
+                            easing: 'easeInOutQuart'
+                        }
+                    }
+                });
+                console.log('Line Chart berhasil dibuat!');
+            } catch (error) {
+                console.error('Error membuat Line Chart:', error);
+            }
+        } else {
+            console.error('Canvas trendLineChart tidak ditemukan!');
+        }
+    
+        
+    }); // Kurung kurawal penutup untuk window.addEventListener('load')
+</script>
+</body>
+</html>
