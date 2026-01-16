@@ -1,0 +1,1312 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Alumni TKJ</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f5f7fa;
+            color: #333;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 280px;
+            height: 100vh;
+            background: linear-gradient(135deg, #2b72ff 0%, #6a9cff 100%);
+            padding: 20px 0;
+            z-index: 1000;
+            box-shadow: 4px 0 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .sidebar.collapsed {
+            width: 80px;
+        }
+
+        .sidebar-header {
+            padding: 20px 25px;
+            color: white;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .sidebar-logo {
+            width: 50px;
+            height: 50px;
+            background: white;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: #2b72ff;
+            flex-shrink: 0;
+        }
+
+        .sidebar-title {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-title h2 {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .sidebar-title p {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        .sidebar.collapsed .sidebar-title {
+            display: none;
+        }
+
+        .sidebar-menu {
+            padding: 20px 0;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px 25px;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border-left: 4px solid transparent;
+        }
+
+        .menu-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-left-color: white;
+        }
+
+        .menu-item.active {
+            background: rgba(255, 255, 255, 0.2);
+            border-left-color: white;
+        }
+
+        .menu-item i {
+            font-size: 20px;
+            width: 24px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .menu-item span {
+            font-size: 15px;
+        }
+
+        .sidebar.collapsed .menu-item span {
+            display: none;
+        }
+
+        .sidebar-toggle {
+            position: absolute;
+            bottom: 20px;
+            left: 25px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-toggle:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 280px;
+            padding: 30px;
+            transition: all 0.3s ease;
+            min-height: 100vh;
+        }
+
+        .sidebar.collapsed + .main-content {
+            margin-left: 80px;
+        }
+
+        /* Top Bar */
+        .top-bar {
+            background: white;
+            padding: 20px 30px;
+            border-radius: 16px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .top-bar h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #333;
+        }
+
+        .admin-profile {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .admin-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #2b72ff 0%, #3e7eff 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+        }
+
+        .admin-info h3 {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .admin-info p {
+            font-size: 12px;
+            color: #666;
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 16px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            color: white;
+        }
+
+        .stat-icon.blue { background: linear-gradient(135deg, #2b72ff 0%, #3e7eff 100%); }
+        .stat-icon.green { background: linear-gradient(135deg, #38ef7d 0%, #11998e 100%); }
+        .stat-icon.orange { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+        .stat-icon.purple { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
+
+        .stat-info h3 {
+            font-size: 32px;
+            font-weight: 700;
+            color: #333;
+        }
+
+        .stat-info p {
+            font-size: 14px;
+            color: #666;
+        }
+
+        /* Content Section */
+        .content-section {
+            display: none;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        .content-card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .card-header h2 {
+            font-size: 22px;
+            font-weight: 700;
+            color: #333;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #2b72ff 0%, #3e7eff 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #38ef7d 0%, #11998e 100%);
+            color: white;
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+
+        /* Table */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .data-table thead {
+            background: #f8f9fa;
+        }
+
+        .data-table th {
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            color: #333;
+            font-size: 14px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .data-table td {
+            padding: 15px;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 14px;
+        }
+
+        .data-table tr:hover {
+            background: #f8f9fa;
+        }
+
+        .table-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-sm {
+            padding: 8px 16px;
+            font-size: 13px;
+        }
+
+        /* Form */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #333;
+            font-size: 14px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 14px;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #2b72ff;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        /* Image Upload */
+        .image-upload {
+            border: 2px dashed #e0e0e0;
+            border-radius: 10px;
+            padding: 40px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .image-upload:hover {
+            border-color: #2b72ff;
+            background: #f8f9fa;
+        }
+
+        .image-upload i {
+            font-size: 48px;
+            color: #2b72ff;
+            margin-bottom: 15px;
+        }
+
+        .image-preview {
+            max-width: 200px;
+            max-height: 200px;
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            max-width: 800px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: modalSlideIn 0.3s ease;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .modal-header h2 {
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #666;
+            transition: color 0.3s ease;
+        }
+
+        .modal-close:hover {
+            color: #333;
+        }
+
+        /* Alumni Card in Dashboard */
+        .alumni-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .alumni-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .alumni-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .alumni-card-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .alumni-card-body {
+            padding: 20px;
+        }
+
+        .alumni-card-body h3 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .alumni-card-body p {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 80px;
+            }
+
+            .sidebar-title {
+                display: none;
+            }
+
+            .menu-item span {
+                display: none;
+            }
+
+            .main-content {
+                margin-left: 80px;
+                padding: 20px;
+            }
+
+            .top-bar {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Success Message */
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: none;
+            align-items: center;
+            gap: 10px;
+            border-left: 4px solid #28a745;
+        }
+
+        .success-message.show {
+            display: flex;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">
+                <i class="fas fa-graduation-cap"></i>
+            </div>
+            <div class="sidebar-title">
+                <h2>Admin Panel</h2>
+                <p>TKJ SMKN 1 Seyegan</p>
+            </div>
+        </div>
+
+        <nav class="sidebar-menu">
+            <a class="menu-item active" onclick="showSection('dashboard')">
+                <i class="fas fa-home"></i>
+                <span>Dashboard</span>
+            </a>
+            <a class="menu-item" onclick="showSection('alumni')">
+                <i class="fas fa-users"></i>
+                <span>5 Alumni Terbaik</span>
+            </a>
+            <a class="menu-item" onclick="showSection('data-alumni')">
+                <i class="fas fa-database"></i>
+                <span>Data Alumni</span>
+            </a>
+            <a class="menu-item" onclick="showSection('berita')">
+                <i class="fas fa-newspaper"></i>
+                <span>Berita & Acara</span>
+            </a>
+            <a class="menu-item" onclick="showSection('settings')">
+                <i class="fas fa-cog"></i>
+                <span>Pengaturan</span>
+            </a>
+            <a class="menu-item" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Logout</span>
+            </a>
+        </nav>
+
+        <button class="sidebar-toggle" onclick="toggleSidebar()">
+            <i class="fas fa-bars"></i>
+        </button>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Top Bar -->
+        <div class="top-bar">
+            <h1 id="pageTitle">Dashboard</h1>
+            <div class="admin-profile">
+                <div class="admin-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="admin-info">
+                    <h3>Admin TKJ</h3>
+                    <p>Administrator</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashboard Section -->
+        <section id="dashboard" class="content-section active">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon blue">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>250</h3>
+                        <p>Total Alumni</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon green">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>185</h3>
+                        <p>Sudah Bekerja</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon orange">
+                        <i class="fas fa-newspaper"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>24</h3>
+                        <p>Total Berita</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon purple">
+                        <i class="fas fa-calendar"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>8</h3>
+                        <p>Acara Mendatang</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <div class="card-header">
+                    <h2>Aktivitas Terbaru</h2>
+                </div>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Waktu</th>
+                            <th>Aktivitas</th>
+                            <th>User</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>10:30 AM</td>
+                            <td>Menambahkan berita baru</td>
+                            <td>Admin TKJ</td>
+                        </tr>
+                        <tr>
+                            <td>09:15 AM</td>
+                            <td>Update data alumni</td>
+                            <td>Admin TKJ</td>
+                        </tr>
+                        <tr>
+                            <td>Kemarin</td>
+                            <td>Mengedit profil alumni terbaik</td>
+                            <td>Admin TKJ</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Alumni Terbaik Section -->
+        <section id="alumni" class="content-section">
+            <div class="content-card">
+                <div class="card-header">
+                    <h2>5 Alumni Terbaik</h2>
+                    <button class="btn btn-primary" onclick="openModal('modalAlumni')">
+                        <i class="fas fa-plus"></i> Tambah Alumni
+                    </button>
+                </div>
+
+                <div class="success-message" id="successAlumni">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Data alumni berhasil disimpan!</span>
+                </div>
+
+                <div class="alumni-grid" id="alumniGrid">
+                    <!-- Alumni cards will be inserted here -->
+                    <div class="alumni-card">
+                        <img src="https://via.placeholder.com/280x200" alt="Alumni" class="alumni-card-image">
+                        <div class="alumni-card-body">
+                            <h3>Hamdullah Debta Erawan</h3>
+                            <p>Angkatan 2020</p>
+                            <p>Senior Software Engineer di Google</p>
+                            <div class="table-actions">
+                                <button class="btn btn-sm btn-primary" onclick="editAlumni(1)">
+                                    <i class="fas fa-edit"></i> Edit
+                                </button>
+                                <button class="btn btn-sm btn-danger" onclick="deleteAlumni(1)">
+                                    <i class="fas fa-trash"></i> Hapus
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Data Alumni Section -->
+        <section id="data-alumni" class="content-section">
+            <div class="content-card">
+                <div class="card-header">
+                    <h2>Data Alumni</h2>
+                    <button class="btn btn-primary" onclick="openModal('modalDataAlumni')">
+                        <i class="fas fa-plus"></i> Tambah Data
+                    </button>
+                </div>
+
+                <div class="success-message" id="successDataAlumni">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Data alumni berhasil disimpan!</span>
+                </div>
+
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>NIS</th>
+                            <th>Nama</th>
+                            <th>Angkatan</th>
+                            <th>Status</th>
+                            <th>Bidang Pekerjaan</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="dataAlumniTable">
+                        <tr>
+                            <td>12345</td>
+                            <td>Budi Santoso</td>
+                            <td>2020</td>
+                            <td>Sudah Bekerja</td>
+                            <td>Network Engineer</td>
+                            <td>
+                                <div class="table-actions">
+                                    <button class="btn btn-sm btn-primary" onclick="editDataAlumni(1)">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-danger" onclick="deleteDataAlumni(1)">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Berita Section -->
+        <section id="berita" class="content-section">
+            <div class="content-card">
+                <div class="card-header">
+                    <h2>Berita & Acara</h2>
+                    <button class="btn btn-primary" onclick="openModal('modalBerita')">
+                        <i class="fas fa-plus"></i> Tambah Berita
+                    </button>
+                </div>
+
+                <div class="success-message" id="successBerita">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Berita berhasil disimpan!</span>
+                </div>
+
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Judul</th>
+                            <th>Kategori</th>
+                            <th>Tanggal</th>
+                            <th>Status</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="beritaTable">
+                        <tr>
+                            <td>Upgrade Alat TKJ</td>
+                            <td>Teknologi</td>
+                            <td>15 Jan 2025</td>
+                            <td><span style="color: #38ef7d;">Aktif</span></td>
+                            <td>
+                                <div class="table-actions">
+                                    <button class="btn btn-sm btn-primary" onclick="editBerita(1)">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-danger" onclick="deleteBerita(1)">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Settings Section -->
+        <section id="settings" class="content-section">
+            <div class="content-card">
+                <div class="card-header">
+                    <h2>Pengaturan Website</h2>
+                </div>
+
+                <div class="form-group">
+                    <label>Nama Website</label>
+                    <input type="text" class="form-control" value="Alumni TKJ SMKN 1 Seyegan">
+                </div>
+
+                <div class="form-group">
+                    <label>Email Kontak</label>
+                    <input type="email" class="form-control" value="addtext@gmail.com">
+                </div>
+
+                <div class="form-group">
+                    <label>Nomor Telepon</label>
+                    <input type="tel" class="form-control" value="+62 812-3456-7890">
+                </div>
+
+                <button class="btn btn-success">
+                    <i class="fas fa-save"></i> Simpan Pengaturan
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal Alumni Terbaik -->
+    <div class="modal" id="modalAlumni">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Tambah/Edit Alumni Terbaik</h2>
+                <button class="modal-close" onclick="closeModal('modalAlumni')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <form id="formAlumni" onsubmit="saveAlumni(event)">
+                <div class="form-group">
+                    <label>Upload Foto</label>
+                    <div class="image-upload" onclick="document.getElementById('alumniImage').click()">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <p>Klik untuk upload foto</p>
+                        <input type="file" id="alumniImage" accept="image/*" style="display: none;" onchange="previewImage(this, 'alumniPreview')">
+                        <img id="alumniPreview" class="image-preview" style="display: none;">
+                    </div>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Nama Lengkap *</label>
+                        <input type="text" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Angkatan *</label>
+                        <input type="number" class="form-control" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Pekerjaan Saat Ini *</label>
+                    <input type="text" class="form-control" placeholder="Contoh: Senior Software Engineer di Google" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Deskripsi</label>
+                    <textarea class="form-control" placeholder="Ceritakan tentang prestasi alumni ini..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Prestasi/Sertifikasi (pisahkan dengan koma)</label>
+                    <input type="text" class="form-control" placeholder="Juara 1 LKS Nasional, Google, CCNA Certified">
+                </div>
+
+                <div class="form-group">
+                    <label>Peringkat *</label>
+                    <select class="form-control" required>
+                        <option value="1">Terbaik 1</option>
+                        <option value="2">Terbaik 2</option>
+                        <option value="3">Terbaik 3</option>
+                        <option value="4">Terbaik 4</option>
+                        <option value="5">Terbaik 5</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-success">
+                    <i class="fas fa-save"></i> Simpan
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Data Alumni -->
+    <div class="modal" id="modalDataAlumni">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Tambah/Edit Data Alumni</h2>
+                <button class="modal-close" onclick="closeModal('modalDataAlumni')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <form id="formDataAlumni" onsubmit="saveDataAlumni(event)">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>NIS *</label>
+                        <input type="text" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Nama Lengkap *</label>
+                        <input type="text" class="form-control" required>
+                    </div>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Angkatan *</label>
+                        <select class="form-control" required>
+                            <option value="">Pilih Angkatan</option>
+                            <option value="2019">2019</option>
+                            <option value="2020">2020</option>
+                            <option value="2021">2021</option>
+                            <option value="2022">2022</option>
+                            <option value="2023">2023</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Status *</label>
+                        <select class="form-control" required id="statusSelect" onchange="togglePekerjaanField()">
+                            <option value="">Pilih Status</option>
+                            <option value="bekerja">Sudah Bekerja</option>
+                            <option value="belum">Belum Bekerja</option>
+                            <option value="kuliah">Melanjutkan Kuliah</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-grid" id="pekerjaanFields" style="display: none;">
+                    <div class="form-group">
+                        <label>Bidang Pekerjaan</label>
+                        <select class="form-control">
+                            <option value="">Pilih Bidang</option>
+                            <option value="Network Engineer">Network Engineer</option>
+                            <option value="System Administrator">System Administrator</option>
+                            <option value="IT Support">IT Support</option>
+                            <option value="Software Developer">Software Developer</option>
+                            <option value="DevOps Engineer">DevOps Engineer</option>
+                            <option value="Cybersecurity">Cybersecurity</option>
+                            <option value="Lainnya">Lainnya</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Nama Perusahaan</label>
+                        <input type="text" class="form-control" placeholder="Contoh: PT Telkom Indonesia">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" class="form-control" placeholder="alumni@email.com">
+                </div>
+
+                <div class="form-group">
+                    <label>No. Telepon</label>
+                    <input type="tel" class="form-control" placeholder="+62 812-3456-7890">
+                </div>
+
+                <button type="submit" class="btn btn-success">
+                    <i class="fas fa-save"></i> Simpan
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Berita & Acara -->
+    <div class="modal" id="modalBerita">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Tambah/Edit Berita & Acara</h2>
+                <button class="modal-close" onclick="closeModal('modalBerita')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <form id="formBerita" onsubmit="saveBerita(event)">
+                <div class="form-group">
+                    <label>Upload Gambar</label>
+                    <div class="image-upload" onclick="document.getElementById('beritaImage').click()">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <p>Klik untuk upload gambar</p>
+                        <input type="file" id="beritaImage" accept="image/*" style="display: none;" onchange="previewImage(this, 'beritaPreview')">
+                        <img id="beritaPreview" class="image-preview" style="display: none;">
+                    </div>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Kategori *</label>
+                        <select class="form-control" required>
+                            <option value="">Pilih Kategori</option>
+                            <option value="Teknologi">Teknologi</option>
+                            <option value="Prestasi">Prestasi</option>
+                            <option value="Workshop">Workshop</option>
+                            <option value="Kerjasama">Kerjasama</option>
+                            <option value="Sertifikasi">Sertifikasi</option>
+                            <option value="Alumni">Alumni</option>
+                            <option value="Acara">Acara</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Tanggal *</label>
+                        <input type="date" class="form-control" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Judul *</label>
+                    <input type="text" class="form-control" placeholder="Judul berita atau acara" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Ringkasan (Excerpt)</label>
+                    <textarea class="form-control" placeholder="Ringkasan singkat yang akan muncul di card..." rows="3"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Konten Lengkap *</label>
+                    <textarea class="form-control" placeholder="Tulis konten berita lengkap di sini..." rows="8" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="isEvent"> 
+                        Tandai sebagai Acara Mendatang (akan muncul notifikasi)
+                    </label>
+                </div>
+
+                <button type="submit" class="btn btn-success">
+                    <i class="fas fa-save"></i> Simpan
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Toggle Sidebar
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('collapsed');
+        }
+
+        // Show Section
+        function showSection(section) {
+            // Hide all sections
+            document.querySelectorAll('.content-section').forEach(s => {
+                s.classList.remove('active');
+            });
+
+            // Remove active from all menu items
+            document.querySelectorAll('.menu-item').forEach(m => {
+                m.classList.remove('active');
+            });
+
+            // Show selected section
+            document.getElementById(section).classList.add('active');
+
+            // Set active menu item
+            event.target.closest('.menu-item').classList.add('active');
+
+            // Update page title
+            const titles = {
+                'dashboard': 'Dashboard',
+                'alumni': '5 Alumni Terbaik',
+                'data-alumni': 'Data Alumni',
+                'berita': 'Berita & Acara',
+                'settings': 'Pengaturan'
+            };
+            document.getElementById('pageTitle').textContent = titles[section];
+        }
+
+        // Modal Functions
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.add('active');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.classList.remove('active');
+            }
+        }
+
+        // Image Preview
+        function previewImage(input, previewId) {
+            const preview = document.getElementById(previewId);
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        // Toggle Pekerjaan Fields
+        function togglePekerjaanField() {
+            const status = document.getElementById('statusSelect').value;
+            const pekerjaanFields = document.getElementById('pekerjaanFields');
+            
+            if (status === 'bekerja') {
+                pekerjaanFields.style.display = 'grid';
+            } else {
+                pekerjaanFields.style.display = 'none';
+            }
+        }
+
+        // Save Alumni Terbaik
+        function saveAlumni(event) {
+            event.preventDefault();
+            
+            // Show success message
+            const successMsg = document.getElementById('successAlumni');
+            successMsg.classList.add('show');
+            
+            // Close modal
+            closeModal('modalAlumni');
+            
+            // Hide success message after 3 seconds
+            setTimeout(() => {
+                successMsg.classList.remove('show');
+            }, 3000);
+
+            // Reset form
+            document.getElementById('formAlumni').reset();
+            document.getElementById('alumniPreview').style.display = 'none';
+
+            // In real application, send data to backend here
+            alert('Data alumni berhasil disimpan!\n\nDalam implementasi nyata, data akan dikirim ke backend untuk disimpan ke database.');
+        }
+
+        // Save Data Alumni
+        function saveDataAlumni(event) {
+            event.preventDefault();
+            
+            const successMsg = document.getElementById('successDataAlumni');
+            successMsg.classList.add('show');
+            
+            closeModal('modalDataAlumni');
+            
+            setTimeout(() => {
+                successMsg.classList.remove('show');
+            }, 3000);
+
+            document.getElementById('formDataAlumni').reset();
+            document.getElementById('pekerjaanFields').style.display = 'none';
+
+            alert('Data alumni berhasil disimpan!\n\nData akan mempengaruhi statistik di halaman utama (chart & grafik).');
+        }
+
+        // Save Berita
+        function saveBerita(event) {
+            event.preventDefault();
+            
+            const successMsg = document.getElementById('successBerita');
+            successMsg.classList.add('show');
+            
+            closeModal('modalBerita');
+            
+            setTimeout(() => {
+                successMsg.classList.remove('show');
+            }, 3000);
+
+            document.getElementById('formBerita').reset();
+            document.getElementById('beritaPreview').style.display = 'none';
+
+            alert('Berita berhasil disimpan!\n\nJika ditandai sebagai acara mendatang, akan muncul notifikasi di halaman utama.');
+        }
+
+        // Edit Alumni
+        function editAlumni(id) {
+            openModal('modalAlumni');
+            // In real application, load data from backend
+            alert('Edit alumni ID: ' + id + '\n\nDalam implementasi nyata, data akan diambil dari database dan ditampilkan di form.');
+        }
+
+        // Delete Alumni
+        function deleteAlumni(id) {
+            if (confirm('Apakah Anda yakin ingin menghapus alumni ini?')) {
+                alert('Alumni ID ' + id + ' berhasil dihapus!\n\nDalam implementasi nyata, data akan dihapus dari database.');
+            }
+        }
+
+        // Edit Data Alumni
+        function editDataAlumni(id) {
+            openModal('modalDataAlumni');
+            alert('Edit data alumni ID: ' + id);
+        }
+
+        // Delete Data Alumni
+        function deleteDataAlumni(id) {
+            if (confirm('Apakah Anda yakin ingin menghapus data alumni ini?')) {
+                alert('Data alumni ID ' + id + ' berhasil dihapus!');
+            }
+        }
+
+        // Edit Berita
+        function editBerita(id) {
+            openModal('modalBerita');
+            alert('Edit berita ID: ' + id);
+        }
+
+        // Delete Berita
+        function deleteBerita(id) {
+            if (confirm('Apakah Anda yakin ingin menghapus berita ini?')) {
+                alert('Berita ID ' + id + ' berhasil dihapus!');
+            }
+        }
+
+        // Logout
+        function logout() {
+            if (confirm('Apakah Anda yakin ingin logout?')) {
+                window.location.href = 'index.html';
+            }
+        }
+
+        // Auto-hide success messages
+        setInterval(() => {
+            document.querySelectorAll('.success-message.show').forEach(msg => {
+                setTimeout(() => {
+                    msg.classList.remove('show');
+                }, 3000);
+            });
+        }, 100);
+    </script>
+</body>
+</html>

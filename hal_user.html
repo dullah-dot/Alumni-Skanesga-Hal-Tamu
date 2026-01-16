@@ -1,29 +1,594 @@
-                <div class="col-lg-6">
-    <div class="event-card" onclick="toggleEvent(this)">
-        <div class="event-alert-badge">!</div>
-        
-        <div class="event-card-image">
-            <img src="URL_GAMBAR" alt="Event">
-            <div class="event-card-overlay"></div>
-            <span class="event-card-category">Event</span>
-            <span class="event-card-date"><i class="fas fa-calendar-alt"></i> TANGGAL</span>
-        </div>
-        <div class="event-card-content">
-            <h3 class="event-card-title">JUDUL EVENT</h3>
-            <p class="event-card-excerpt">Ringkasan...</p>
-            <div class="event-card-meta">
-                <!-- Meta info -->
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil Pengguna - Alumni SMKN 1 Seyegan</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Navbar dengan Welcome Section */
+        .profile-navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: linear-gradient(135deg, #2b72ff);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
+
+
+        .welcome-section {
+            position: relative;
+            padding: 50px 0 10px 0;
+            text-align: center;
+        }
+
+        .welcome-text {
+            color: white;
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 40px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .profile-avatar-container {
+            position: absolute;
+            bottom: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+        }
+
+        .profile-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            border: 5px solid #2b72ff;
+        }
+
+        .profile-avatar:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .profile-avatar i {
+            font-size: 48px;
+            color: #2b72ff;
+        }
+
+        /* Menu Dropdown Fullscreen */
+        .menu-overlay {
+            position: fixed;
+            top: -100%;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: linear-gradient(135deg, #2b72ff);
+            z-index: 999;
+            transition: top 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            overflow-y: auto;
+        }
+
+        .menu-overlay.active {
+            top: 0;
+        }
+
+        .menu-container {
+            padding: 180px 20px 40px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .menu-header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+
+        .menu-header h2 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .menu-header p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        .menu-items {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .menu-item {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            padding: 20px 25px;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .menu-item:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateX(10px);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+
+        .menu-item-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .menu-item-content {
+            flex: 1;
+        }
+
+        .menu-item-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .menu-item-desc {
+            font-size: 13px;
+            opacity: 0.8;
+        }
+
+        .menu-item-arrow {
+            font-size: 20px;
+            opacity: 0.6;
+            transition: all 0.3s ease;
+        }
+
+        .menu-item:hover .menu-item-arrow {
+            opacity: 1;
+            transform: translateX(5px);
+        }
+
+        .close-menu {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .close-menu:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(90deg);
+        }
+
+        /* Hero Section dengan Parallax */
+        .hero-parallax-js {
+            position: relative;
+            height: 100vh;
+            min-height: 600px;
+            overflow: hidden;
+            margin-top: 5px; /* Space for navbar */
+        }
+
+        .parallax-element {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .parallax-bg {
+            z-index: 1;
+        }
+
+        .parallax-cloud-left {
+            z-index: 2;
+            left: -10%;
+            width: 50%;
+            height: auto;
+            top: 20%;
+        }
+
+        .parallax-cloud-right {
+            z-index: 3;
+            right: -10%;
+            width: 50%;
+            height: auto;
+            top: 30%;
+        }
+
+        .parallax-hand {
+            z-index: 4;
+            bottom: -50px;
+            height: 60%;
+            width: auto;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 5;
+            height: 100%;
+        }
+
+        .hero-content h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Content Section */
+        .content-section {
+            padding: 80px 0;
+            background: #f8f9fa;
+        }
+
+        .info-card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        .info-card h3 {
+            color: #2b72ff;
+            margin-bottom: 20px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .welcome-text {
+                font-size: 20px;
+            }
+
+            .welcome-section {
+                padding: 25px 0 10px 0
+            }
+
+            .profile-avatar {
+                width: 80px;
+                height: 80px;
+            }
+
+            .profile-avatar i {
+                font-size: 36px;
+            }
+
+            .menu-header h2 {
+                font-size: 24px;
+            }
+
+            .menu-item {
+                padding: 15px 20px;
+            }
+
+            .menu-item-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 20px;
+            }
+
+            .menu-item-title {
+                font-size: 16px;
+            }
+
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+
+            .hero-content p {
+                font-size: 1rem;
+            }
+        }
+
+        /* Animation */
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .menu-item {
+            animation: slideDown 0.5s ease forwards;
+            opacity: 0;
+        }
+
+        .menu-item:nth-child(1) { animation-delay: 0.1s; }
+        .menu-item:nth-child(2) { animation-delay: 0.2s; }
+        .menu-item:nth-child(3) { animation-delay: 0.3s; }
+        .menu-item:nth-child(4) { animation-delay: 0.4s; }
+        .menu-item:nth-child(5) { animation-delay: 0.5s; }
+        .menu-item:nth-child(6) { animation-delay: 0.6s; }
+    </style>
+</head>
+<body>
+    <!-- Navbar dengan Profile -->
+    <nav class="profile-navbar">
+        <div class="welcome-section">
+            <!-- <div class="welcome-text">Selamat Datang Pengguna 1</div> -->
+            <div class="profile-avatar-container">
+                <div class="profile-avatar" onclick="toggleMenu()">
+                    <i class="fas fa-user"></i>
+                </div>
             </div>
-            <span class="event-card-read-more">Lihat Detail <i class="fas fa-arrow-right"></i></span>
         </div>
-        <div class="event-card-full-content">
-            <p class="event-card-full-text">
-                Detail lengkap event...
-            </p>
-            <a href="#" class="event-card-register-btn">Daftar Sekarang</a>
-        </div>
-        <div class="event-card-close">
-            <i class="fas fa-times-circle"></i> Tutup
+    </nav>
+
+    <!-- Menu Overlay Fullscreen -->
+    <div class="menu-overlay" id="menuOverlay">
+        <!-- <button class="close-menu" onclick="toggleMenu()">
+            <i class="fas fa-times"></i>
+        </button> -->
+        
+        <div class="menu-container">
+            <div class="menu-header">
+                <h2>Menu Profil</h2>
+                <p>Kelola akun dan preferensi Anda</p>
+            </div>
+
+            <div class="menu-items">
+                <a href="#profil-saya" class="menu-item" onclick="navigateTo(event, '#profil-saya')">
+                    <div class="menu-item-icon">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                    <div class="menu-item-content">
+                        <div class="menu-item-title">Profil Saya</div>
+                        <div class="menu-item-desc">Lihat dan edit informasi profil Anda</div>
+                    </div>
+                    <div class="menu-item-arrow">
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                </a>
+
+                <a href="#edit-data" class="menu-item" onclick="navigateTo(event, '#edit-data')">
+                    <div class="menu-item-icon">
+                        <i class="fas fa-edit"></i>
+                    </div>
+                    <div class="menu-item-content">
+                        <div class="menu-item-title">Edit Data Diri</div>
+                        <div class="menu-item-desc">Perbarui informasi pribadi Anda</div>
+                    </div>
+                    <div class="menu-item-arrow">
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                </a>
+
+                <a href="#riwayat-pekerjaan" class="menu-item" onclick="navigateTo(event, '#riwayat-pekerjaan')">
+                    <div class="menu-item-icon">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    <div class="menu-item-content">
+                        <div class="menu-item-title">Riwayat Pekerjaan</div>
+                        <div class="menu-item-desc">Kelola pengalaman kerja Anda</div>
+                    </div>
+                    <div class="menu-item-arrow">
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                </a>
+
+                <a href="#pendidikan" class="menu-item" onclick="navigateTo(event, '#pendidikan')">
+                    <div class="menu-item-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div class="menu-item-content">
+                        <div class="menu-item-title">Riwayat Pendidikan</div>
+                        <div class="menu-item-desc">Tambahkan riwayat pendidikan</div>
+                    </div>
+                    <div class="menu-item-arrow">
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                </a>
+
+                <a href="#pengaturan" class="menu-item" onclick="navigateTo(event, '#pengaturan')">
+                    <div class="menu-item-icon">
+                        <i class="fas fa-cog"></i>
+                    </div>
+                    <div class="menu-item-content">
+                        <div class="menu-item-title">Pengaturan</div>
+                        <div class="menu-item-desc">Atur preferensi akun Anda</div>
+                    </div>
+                    <div class="menu-item-arrow">
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                </a>
+
+                <a href="#logout" class="menu-item" onclick="navigateTo(event, '#logout')">
+                    <div class="menu-item-icon">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </div>
+                    <div class="menu-item-content">
+                        <div class="menu-item-title">Keluar</div>
+                        <div class="menu-item-desc">Logout dari akun Anda</div>
+                    </div>
+                    <div class="menu-item-arrow">
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                </a>
+            </div>
         </div>
     </div>
-</div>
+
+    <!-- Hero Section dengan Parallax -->
+    <section class="hero-parallax-js">
+        <!-- LAYER 1: Background Awan -->
+        <img src="background_awan.png" alt="Background Langit" class="parallax-element parallax-bg">
+        
+        <!-- LAYER 2: Awan Kiri -->
+        <img src="awan_kiri.png" alt="Background Langit" class="parallax-element parallax-bg">
+        
+        <!-- LAYER 3: Awan Kanan -->
+        <img src="awan_kanan.png" alt="Background Langit" class="parallax-element parallax-bg">
+        
+        <!-- Text Overlay -->
+        <div class="hero-content d-flex align-items-center justify-content-center text-white">
+            <div class="container text-center px-3">
+                <h1 class="display-4 fw-bold">Kelola Profil Alumni Anda</h1>
+                <p class="lead">Perbarui informasi dan tetap terhubung dengan komunitas TKJ</p>
+                <a href="#profil-saya" class="btn btn-warning btn-lg mt-3">Lihat Profil</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Content Section -->
+    <section class="content-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <div class="info-card" id="profil-saya">
+                        <h3><i class="fas fa-user-circle me-2"></i>Profil Saya</h3>
+                        <p>Halaman ini akan menampilkan informasi profil lengkap Anda.</p>
+                    </div>
+
+                    <div class="info-card" id="edit-data">
+                        <h3><i class="fas fa-edit me-2"></i>Edit Data Diri</h3>
+                        <p>Di sini Anda dapat mengedit data pribadi seperti nama, alamat, nomor telepon, dll.</p>
+                    </div>
+
+                    <div class="info-card" id="riwayat-pekerjaan">
+                        <h3><i class="fas fa-briefcase me-2"></i>Riwayat Pekerjaan</h3>
+                        <p>Tambahkan dan kelola pengalaman kerja Anda di sini.</p>
+                    </div>
+
+                    <div class="info-card" id="pendidikan">
+                        <h3><i class="fas fa-graduation-cap me-2"></i>Riwayat Pendidikan</h3>
+                        <p>Tambahkan riwayat pendidikan formal dan non-formal Anda.</p>
+                    </div>
+
+                    <div class="info-card" id="pengaturan">
+                        <h3><i class="fas fa-cog me-2"></i>Pengaturan</h3>
+                        <p>Atur preferensi akun, privasi, dan notifikasi.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Toggle Menu
+        function toggleMenu() {
+            const menuOverlay = document.getElementById('menuOverlay');
+            menuOverlay.classList.toggle('active');
+            
+            // Prevent body scroll when menu is open
+            if (menuOverlay.classList.contains('active')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        // Navigate to section
+        function navigateTo(event, target) {
+            event.preventDefault();
+            
+            // Close menu with animation
+            const menuOverlay = document.getElementById('menuOverlay');
+            menuOverlay.classList.remove('active');
+            document.body.style.overflow = 'auto';
+            
+            // Navigate after menu closes
+            setTimeout(() => {
+                if (target === '#logout') {
+                    // Handle logout
+                    if (confirm('Apakah Anda yakin ingin keluar?')) {
+                        // Redirect to login page or home
+                        window.location.href = 'index.html';
+                    }
+                } else {
+                    // Smooth scroll to section
+                    const element = document.querySelector(target);
+                    if (element) {
+                        const navbarHeight = 180;
+                        const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+                        const offsetPosition = elementPosition - navbarHeight - 20;
+
+                        window.scrollTo({
+                            top: offsetPosition,
+                            behavior: 'smooth'
+                        });
+                    }
+                }
+            }, 300);
+        }
+
+        // Parallax Effect
+        window.addEventListener('scroll', function() {
+            const scrolled = window.pageYOffset;
+            const parallaxElements = document.querySelectorAll('.parallax-element');
+            
+            parallaxElements.forEach(element => {
+                const speed = element.dataset.speed || 0.5;
+                const yPos = -(scrolled * speed);
+                element.style.transform = `translateY(${yPos}px)`;
+            });
+        });
+
+        // Close menu on escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                const menuOverlay = document.getElementById('menuOverlay');
+                if (menuOverlay.classList.contains('active')) {
+                    toggleMenu();
+                }
+            }
+        });
+    </script>
+</body>
+</html>
